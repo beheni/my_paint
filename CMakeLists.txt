@@ -54,7 +54,7 @@ include(cmake/CompilerWarnings.cmake)
 # Project files, packages, libraries and so on
 ##########################################################
 find_package(Qt6 REQUIRED COMPONENTS Widgets)
-qt_standard_project_setup()
+
 #! Project main executable source compilation
 add_executable(${PROJECT_NAME} main.cpp)
 target_link_libraries(${PROJECT_NAME} Qt6::Widgets)
@@ -63,7 +63,9 @@ set_target_properties(${PROJECT_NAME} PROPERTIES
 		MACOSX_BUNDLE ON
 )
 #! Put path to your project headers
-
+set(CMAKE_AUTOMOC ON) 
+set(CMAKE_AUTORCC ON) 
+set(CMAKE_AUTOUIC ON)
 #! Add external packages
 # options_parser requires boost::program_options library
 find_package(Boost 1.71.0 COMPONENTS program_options system REQUIRED)
