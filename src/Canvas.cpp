@@ -5,33 +5,19 @@ Canvas::Canvas(QWidget *parent) : QWidget(parent) {
     setStyleSheet("background-color: white;");
 }
 
-void Canvas::paintEvent(QPaintEvent *event) {
-    QPainter painter(this);
-    painter.setRenderHint(QPainter::Antialiasing);
-    painter.setPen(QPen(Qt::black, 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
-    painter.setBrush(Qt::NoBrush);
-    painter.drawPath(path);
+void Canvas::addLayer() {
+    Layer *layer = new Layer(this);
+    layers.push_back(layer);
+    activeLayer = layers.back();
 }
 
-void Canvas::mousePressEvent(QMouseEvent *event) {
-    if (event->button() == Qt::LeftButton) {
-        path.moveTo(event->pos());
-        drawing = true;
+void Canvas::removeLayer() {
+    if (layers.size() > 1) {
+        layers.pop_back();
+        activeLayer = layers.back();
     }
 }
 
-void Canvas::mouseMoveEvent(QMouseEvent *event) {
-    if ((event->buttons() & Qt::LeftButton) && drawing) {
-        path.lineTo(event->pos());
-        update();
-    }
+void Canvas::setActiveLayer(int index) {
+    activeLayer = layers[index];
 }
-
-void Canvas::mouseReleaseEvent(QMouseEvent *event) {
-    if (event->button() == Qt::LeftButton && drawing) {
-        path.lineTo(event->pos());
-        drawing = false;
-        update();
-    }
-}
-

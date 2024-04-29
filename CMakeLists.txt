@@ -63,7 +63,8 @@ add_executable(${PROJECT_NAME} src/main.cpp src/form.ui ${PROJECT_INCLUDES}
 src/MainWindow.cpp
 src/Menu.cpp
 src/ToolBar.cpp
-src/Canvas.cpp)
+src/Canvas.cpp
+src/Layer.cpp)
 target_link_libraries(${PROJECT_NAME} Qt6::Widgets)
 set_target_properties(${PROJECT_NAME} PROPERTIES
 		WIN32_EXECUTABLE ON
