@@ -62,7 +62,8 @@ file(GLOB_RECURSE PROJECT_INCLUDES include/*.h)
 add_executable(${PROJECT_NAME} src/main.cpp src/form.ui ${PROJECT_INCLUDES}
 src/MainWindow.cpp
 src/Menu.cpp
-src/ToolBar.cpp)
+src/ToolBar.cpp
+src/Canvas.cpp)
 target_link_libraries(${PROJECT_NAME} Qt6::Widgets)
 set_target_properties(${PROJECT_NAME} PROPERTIES
 		WIN32_EXECUTABLE ON

@@ -9,7 +9,7 @@
 class MainWindow: public QMainWindow
 {
     Q_OBJECT
-    Canvas canvas;
+    Canvas* canvas;
     Menu* menu;
     ToolBar* toolBar; //якась збірка тулів
     Tool currentTool;

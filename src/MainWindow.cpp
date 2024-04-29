@@ -10,5 +10,6 @@ MainWindow::MainWindow(){
     setMenuBar(menu);
     toolBar = new ToolBar(this);
     addToolBar(Qt::LeftToolBarArea, toolBar);
-
+    canvas = new Canvas(this);
+    setCentralWidget(canvas);
 }
