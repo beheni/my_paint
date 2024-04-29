@@ -21,7 +21,9 @@ set(WARNINGS_AS_ERRORS OFF)
 
 #! Always use PVS Studio while developing.
 set(ENABLE_PVS_STUDIO OFF)
-
+set(CMAKE_AUTOMOC ON)
+set (CMAKE_PREFIX_PATH "${CMAKE_PREFIX_PATH};/usr/local/Qt-6.7.0/")
+message("${CMAKE_PREFIX_PATH}")
 #! Select appropriate sanitizers.
 #  Definitely enable sanitizers while developing.
 #  Disable it for the production builds and before submitting for grading.
@@ -57,7 +59,8 @@ find_package(Qt6 REQUIRED COMPONENTS Widgets)
 
 #! Project main executable source compilation
 file(GLOB_RECURSE PROJECT_INCLUDES include/*.h)
-add_executable(${PROJECT_NAME} src/main.cpp ${PROJECT_INCLUDES})
+add_executable(${PROJECT_NAME} src/main.cpp src/form.ui ${PROJECT_INCLUDES}
+src/MainWindow.cpp)
 target_link_libraries(${PROJECT_NAME} Qt6::Widgets)
 set_target_properties(${PROJECT_NAME} PROPERTIES
 		WIN32_EXECUTABLE ON

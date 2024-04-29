@@ -3,16 +3,19 @@
 
 #include <QApplication>
 #include <QPushButton>
-#include "Application.h"
+#include "MainWindow.h"
 
 int main(int argc, char **argv)
 {
     QApplication app (argc, argv);
+    MainWindow w;
+    w.show();
+    w.setFixedSize(800, 600);
 
-    QPushButton button;
-    button.setText("My text");
-    button.setToolTip("A tooltip");
-    button.show();
+    // QPushButton button;
+    // button.setText("My text");
+    // button.setToolTip("A tooltip");
+    // button.show();
 
     return QApplication::exec();
 }
