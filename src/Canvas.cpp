@@ -1,15 +1,20 @@
 #include "Canvas.h"
 #include <iostream>
+#include <QDebug>
 Canvas::Canvas(QWidget *parent) : QWidget(parent) {
     setMouseTracking(true);
+    resize(parent->size());
     addLayer();
+
 }
 
 void Canvas::addLayer() {
     Layer *layer = new Layer(this);
     layers.push_back(layer);
-    std::cout<<layers.size()<<std::endl;
     activeLayer = layers.back();
+    activeLayer->resize(size());
+    qDebug() << size()<< "\n";
+    qDebug() << activeLayer->size()<< "\n";
 }
 
 void Canvas::removeLayer() {
