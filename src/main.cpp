@@ -9,8 +9,9 @@ int main(int argc, char **argv)
 {
     QApplication app (argc, argv);
     MainWindow w;
-    w.show();
     w.setFixedSize(800, 600);
+    w.show();
+
 
     // QPushButton button;
     // button.setText("My text");

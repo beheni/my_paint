@@ -7,20 +7,33 @@
 #include <QVBoxLayout>
 #include "Menu.h"
 #include "MainWindow.h"
+#include <QObjectList>
+#include <QDebug>
+
 
 MainWindow::MainWindow(){
     menu = new MenuBar(this);
+    menu->setObjectName("menu");
     setMenuBar(menu);
     toolBar = new ToolBar(this);
+    toolBar->setObjectName("toolbar");
     addToolBar(Qt::LeftToolBarArea, toolBar);
     canvas = new Canvas(this);
-    // QVBoxLayout *layout = new QVBoxLayout(canvas);
+    canvas->setObjectName("canvas");
     // layout->setContentsMargins(0, 0, 0, 0);
     setCentralWidget(canvas);
+    centralWidget()->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
+    centralWidget()->setContentsMargins(0,0,0,0);
+
+    // centralWidget()->setFixedHeight(sizeHint().height());
     // layout()->setContentsMargins(0, 0, 0, 0);
-    // canvas->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    // canvas->setSizePolicy();
     // QLayout *centralLayout = centralWidget()->layout();
-    // if (centralLayout)
-    //     centralLayout->setContentsMargins(0, 0, 0, 0);
     // layout()->setSpacing(0);
 }
+
+void MainWindow::resizeEvent(QResizeEvent* event){
+    QMainWindow::resizeEvent(event);
+    centralWidget()->resize(event->size());
+}
+

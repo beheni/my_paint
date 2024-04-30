@@ -23,7 +23,7 @@ void Layer::mousePressEvent(QMouseEvent *event) {
 void Layer::mouseMoveEvent(QMouseEvent *event) {
     if ((event->buttons() & Qt::LeftButton) && drawing) {
         path.lineTo(event->pos());
-        update();
+        repaint();
     }
 }
 
@@ -31,7 +31,7 @@ void Layer::mouseReleaseEvent(QMouseEvent *event) {
     if (event->button() == Qt::LeftButton && drawing) {
         path.lineTo(event->pos());
         drawing = false;
-        update();
+        repaint();
     }
 }
 

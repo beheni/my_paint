@@ -18,6 +18,7 @@ class MainWindow: public QMainWindow
     // void save();
 public:
     explicit MainWindow();
+    void resizeEvent(QResizeEvent *event) override;
     // ~MainWindow() override = default;
     // int run();
 // private:

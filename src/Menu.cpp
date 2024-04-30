@@ -15,6 +15,7 @@ MenuBar::MenuBar(QWidget *parent) : QMenuBar(parent) {
     addMenu(edit);
     addMenu(view);
     addMenu(help);
+
 }
 
 

@@ -1,46 +1,53 @@
 #include "Canvas.h"
-#include <iostream>
-#include <QDebug>
-Canvas::Canvas(QWidget *parent) : QWidget(parent) {
+#include <QGraphicsPathItem>
+#include <QStyleOptionGraphicsItem>
+
+Canvas::Canvas(QWidget* parent): QGraphicsView(parent){
+    QGraphicsScene* scene = new QGraphicsScene(this);
+    setScene(scene);
+    setRenderHint(QPainter::Antialiasing);
+    setRenderHint(QPainter::SmoothPixmapTransform);
+    drawing = false;
     setMouseTracking(true);
-    resize(parent->size());
-    addLayer();
+    setSceneRect(QRect(QPoint(0,0), parent->size()));
 
 }
 
-void Canvas::addLayer() {
-    Layer *layer = new Layer(this);
-    layers.push_back(layer);
-    activeLayer = layers.back();
-    activeLayer->resize(size());
-    qDebug() << size()<< "\n";
-    qDebug() << activeLayer->size()<< "\n";
+void Canvas::resizeEvent(QResizeEvent *event) {
+    QGraphicsView::resizeEvent(event);
+    scene()->setSceneRect(sceneRect());
 }
-
-void Canvas::removeLayer() {
-    if (layers.size() > 1) {
-        layers.pop_back();
-        activeLayer = layers.back();
+void Canvas::mousePressEvent(QMouseEvent *event) {
+    path.clear();
+    qDebug() << "Pressed";
+    if (event->button() == Qt::LeftButton) {
+        drawing = true;
+    }
+}
+void Canvas::mouseMoveEvent(QMouseEvent *event) {
+    if ((event->buttons() & Qt::LeftButton) && drawing) {
+        path.lineTo(event->pos());
     }
 }
 
-void Canvas::setActiveLayer(int index) {
-    activeLayer = layers[index];
-}
-
-
-void Canvas::paintEvent(QPaintEvent *event) {
-    activeLayer->update();
-}
-
-void Canvas::mousePressEvent(QMouseEvent *event) {
-    activeLayer->mousePressEvent(event);
-}
-
-void Canvas::mouseMoveEvent(QMouseEvent *event) {
-    activeLayer->mouseMoveEvent(event);
-}
-
 void Canvas::mouseReleaseEvent(QMouseEvent *event) {
-    activeLayer->mouseReleaseEvent(event);
+    if (event->button() == Qt::LeftButton && drawing) {
+        path.lineTo(event->pos());
+        drawing = false;
+        qDebug() << "Released";
+        update();
+        scene()->update();
+    }
+}
+void Canvas::paintEvent(QPaintEvent *event) {
+    qDebug() << "Paint";
+    QStyleOptionGraphicsItem style{};
+    QPainter painter(this);
+    painter.setRenderHint(QPainter::Antialiasing);
+    painter.setPen(QPen(Qt::black, 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+    painter.setBrush(Qt::NoBrush);
+    scene()->addPath(path, painter.pen(), painter.brush());
+    for (auto* item: scene()->items()){
+        item->update();
+    }
 }
