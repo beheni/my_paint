@@ -6,7 +6,7 @@
 #include "MainWindow.h"
 
 MainWindow::MainWindow(){
-    menu = new Menu(this);
+    menu = new MenuBar(this);
     setMenuBar(menu);
     toolBar = new ToolBar(this);
     addToolBar(Qt::LeftToolBarArea, toolBar);

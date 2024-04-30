@@ -10,7 +10,7 @@ class MainWindow: public QMainWindow
 {
     Q_OBJECT
     Canvas* canvas;
-    Menu* menu;
+    MenuBar* menu;
     ToolBar* toolBar; //якась збірка тулів
     Tool currentTool;
 // private slots:

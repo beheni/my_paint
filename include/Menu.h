@@ -2,9 +2,19 @@
 #define MY_PAINT_MENU_H
 #include <QMenuBar>
 
-class Menu : public QMenuBar {
+class MenuBar : public QMenuBar {
     Q_OBJECT
 public:
-    Menu(QWidget *parent = nullptr);
+    MenuBar(QWidget *parent = nullptr);
 };
+
+class Menu : public QMenu{
+    Q_OBJECT
+public:
+
+    explicit Menu(const QString &title, QWidget *parent = nullptr);
+    ~Menu() override = default;
+};
+
+
 #endif //MY_PAINT_MENU_H
