@@ -7,17 +7,19 @@
 #include <QMouseEvent>
 #include <QPainterPath>
 #include "Curve.h"
-class Layer: QWidget{
+
+class Layer: public QWidget{
     Q_OBJECT
 public:
-    Layer(QWidget *parent = nullptr);
+    explicit Layer(QWidget *parent = nullptr);
     std::vector<Curve> curves;
     std::optional<Curve> activeCurve;
-protected:
+public:
     void paintEvent(QPaintEvent *event) override;
     void mousePressEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
     void mouseReleaseEvent(QMouseEvent *event) override;
+    // void update();
 private:
     bool drawing;
     QPainterPath path;

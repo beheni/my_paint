@@ -1,13 +1,14 @@
 #include "Canvas.h"
-
+#include <iostream>
 Canvas::Canvas(QWidget *parent) : QWidget(parent) {
     setMouseTracking(true);
-    setStyleSheet("background-color: white;");
+    addLayer();
 }
 
 void Canvas::addLayer() {
     Layer *layer = new Layer(this);
     layers.push_back(layer);
+    std::cout<<layers.size()<<std::endl;
     activeLayer = layers.back();
 }
 
@@ -20,4 +21,21 @@ void Canvas::removeLayer() {
 
 void Canvas::setActiveLayer(int index) {
     activeLayer = layers[index];
+}
+
+
+void Canvas::paintEvent(QPaintEvent *event) {
+    activeLayer->update();
+}
+
+void Canvas::mousePressEvent(QMouseEvent *event) {
+    activeLayer->mousePressEvent(event);
+}
+
+void Canvas::mouseMoveEvent(QMouseEvent *event) {
+    activeLayer->mouseMoveEvent(event);
+}
+
+void Canvas::mouseReleaseEvent(QMouseEvent *event) {
+    activeLayer->mouseReleaseEvent(event);
 }

@@ -5,7 +5,7 @@
 class MenuBar : public QMenuBar {
     Q_OBJECT
 public:
-    MenuBar(QWidget *parent = nullptr);
+    explicit MenuBar(QWidget *parent = nullptr);
 };
 
 class Menu : public QMenu{

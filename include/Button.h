@@ -1,7 +1,7 @@
 #ifndef MY_PAINT_BUTTON_H
 #define MY_PAINT_BUTTON_H
 
-#include <QToolButton>>
+#include <QToolButton>
 
 class Button: public QToolButton{
     Q_OBJECT

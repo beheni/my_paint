@@ -64,11 +64,8 @@ src/MainWindow.cpp
 src/Menu.cpp
 src/ToolBar.cpp
 src/Canvas.cpp
-<<<<<<< HEAD
-src/Button.cpp)
-=======
+src/Button.cpp
 src/Layer.cpp)
->>>>>>> refs/remotes/origin/main
 target_link_libraries(${PROJECT_NAME} Qt6::Widgets)
 set_target_properties(${PROJECT_NAME} PROPERTIES
 		WIN32_EXECUTABLE ON

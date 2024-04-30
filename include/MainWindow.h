@@ -17,7 +17,7 @@ class MainWindow: public QMainWindow
     // void open();
     // void save();
 public:
-    MainWindow();
+    explicit MainWindow();
     // ~MainWindow() override = default;
     // int run();
 // private:
