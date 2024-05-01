@@ -21,7 +21,6 @@ MainWindow::MainWindow(){
     canvas = new Canvas(this);
     scene = new QGraphicsScene(this);
     canvas->setScene(scene);
-    scene->addRect(-100,100,100,100, QPen(Qt::black, 2), QBrush(Qt::red));
     canvas->setObjectName("canvas");
     setCentralWidget(canvas);
     centralWidget()->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);

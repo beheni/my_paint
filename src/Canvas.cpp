@@ -12,7 +12,7 @@ Canvas::Canvas(QWidget* parent): QGraphicsView(parent){
 
 void Canvas::resizeEvent(QResizeEvent *event) {
     QGraphicsView::resizeEvent(event);
-    scene()->setSceneRect(sceneRect());
+    setSceneRect(0, 0, width(), height());
 }
 
 void Canvas::paintEvent(QPaintEvent *event) {
@@ -32,9 +32,11 @@ void Canvas::paintEvent(QPaintEvent *event) {
 
 void Canvas::mousePressEvent(QMouseEvent *event) {
     path.clear();
+    path.moveTo(event->pos());
     qDebug() << "Pressed";
     if (event->button() == Qt::LeftButton) {
         drawing = true;
+        path.lineTo(event->pos());
     }
 }
 void Canvas::mouseMoveEvent(QMouseEvent *event) {
