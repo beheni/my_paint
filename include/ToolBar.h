@@ -10,6 +10,13 @@ public:
 
 private slots:
     void onSelection();
-    void onBezier();
+    // void onSelectionArea();
+    void onLine();
+    void onRect();
+    void onTriangle();
+    void onEllipse();
+    void onPoly();
+    void onText();
+    // void onBezier(); //for later
 };
 #endif //MY_PAINT_TOOLBAR_H
