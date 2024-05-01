@@ -6,6 +6,7 @@ Layer::Layer(QWidget *parent) : QWidget(parent) {
 }
 
 void Layer::paintEvent(QPaintEvent *event) {
+
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
     painter.setPen(QPen(Qt::black, 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
@@ -23,7 +24,7 @@ void Layer::mousePressEvent(QMouseEvent *event) {
 void Layer::mouseMoveEvent(QMouseEvent *event) {
     if ((event->buttons() & Qt::LeftButton) && drawing) {
         path.lineTo(event->pos());
-        repaint();
+        update();
     }
 }
 
@@ -31,7 +32,7 @@ void Layer::mouseReleaseEvent(QMouseEvent *event) {
     if (event->button() == Qt::LeftButton && drawing) {
         path.lineTo(event->pos());
         drawing = false;
-        repaint();
+        update();
     }
 }
 

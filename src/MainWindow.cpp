@@ -19,17 +19,14 @@ MainWindow::MainWindow(){
     toolBar->setObjectName("toolbar");
     addToolBar(Qt::LeftToolBarArea, toolBar);
     canvas = new Canvas(this);
+    scene = new QGraphicsScene(this);
+    canvas->setScene(scene);
+    scene->addRect(-100,100,100,100, QPen(Qt::black, 2), QBrush(Qt::red));
     canvas->setObjectName("canvas");
-    // layout->setContentsMargins(0, 0, 0, 0);
     setCentralWidget(canvas);
     centralWidget()->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
     centralWidget()->setContentsMargins(0,0,0,0);
-
-    // centralWidget()->setFixedHeight(sizeHint().height());
-    // layout()->setContentsMargins(0, 0, 0, 0);
-    // canvas->setSizePolicy();
-    // QLayout *centralLayout = centralWidget()->layout();
-    // layout()->setSpacing(0);
+    centralWidget()->show();
 }
 
 void MainWindow::resizeEvent(QResizeEvent* event){

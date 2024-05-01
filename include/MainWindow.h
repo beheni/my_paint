@@ -1,6 +1,7 @@
 #ifndef MY_PAINT_MAINWINDOW_H
 #define MY_PAINT_MAINWINDOW_H
 #include <QMainWindow>
+#include <QGraphicsScene>
 #include "Canvas.h"
 #include "Menu.h"
 #include "ToolBar.h"
@@ -13,6 +14,7 @@ class MainWindow: public QMainWindow
     MenuBar* menu;
     ToolBar* toolBar; //якась збірка тулів
     Tool currentTool;
+    QGraphicsScene * scene;
 // private slots:
     // void open();
     // void save();
