@@ -15,9 +15,8 @@ Canvas::Canvas(QWidget* parent): QGraphicsView(parent){
 
 void Canvas::resizeEvent(QResizeEvent *event) {
     QGraphicsView::resizeEvent(event);
-    fitInView(sceneRect(), Qt::KeepAspectRatioByExpanding);
     scene()->setSceneRect(0,0, width(), height());
-
+    fitInView(sceneRect(), Qt::KeepAspectRatio);
 }
 
 void Canvas::paintEvent(QPaintEvent *event) {
