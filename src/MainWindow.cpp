@@ -33,6 +33,7 @@ MainWindow::MainWindow(){
     centralWidget()->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
     centralWidget()->setContentsMargins(0,0,0,0);
     centralWidget()->show();
+
 }
 
 void MainWindow::resizeEvent(QResizeEvent* event){

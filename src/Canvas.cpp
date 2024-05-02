@@ -43,11 +43,14 @@ void Canvas::mouseMoveEvent(QMouseEvent *event) {
 
 void Canvas::mouseReleaseEvent(QMouseEvent *event) {
     if (event->button() == Qt::LeftButton && drawing) {
-        if (tool_) tool_->mouseReleaseCallback(event, this);
         drawing = false;
+        if (tool_) tool_->mouseReleaseCallback(event, this);
         if (tool_) {
             auto newItem = tool_->newItem();
-            if (newItem) scene()->addItem(newItem);
+            if (newItem)
+                scene()->addItem(newItem);
+            else
+                scene()->update();
             // scene()->addItem(tool_->newItem());
         }
     }

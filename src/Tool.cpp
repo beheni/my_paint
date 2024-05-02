@@ -64,18 +64,20 @@ void SelectionTool::mouseMove(QMouseEvent *event, QGraphicsView* drawer) {
         }
         qDebug() << "selected items count"<< selectedItems.size();
     }
+
 }
 
 void SelectionTool::mouseRelease(QMouseEvent *event, QGraphicsView* drawer) {
-    end = event->pos();
+    if (selectedItems.size() == 0) end = start;
+    else end = event->pos();
 }
 
 void SelectionTool::painter(QPaintEvent *event, QGraphicsView *drawer) {
     QPainter painter(drawer->viewport());
 
-    // painter.setRenderHint(QPainter::Antialiasing);
-    // painter.setPen(QPen(Qt::black, 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
-    // painter.setBrush(Qt::NoBrush);
+    painter.setRenderHint(QPainter::Antialiasing);
+    painter.setPen(QPen(Qt::gray, 2, Qt::DashLine, Qt::RoundCap, Qt::RoundJoin));
+    painter.setBrush(Qt::NoBrush);
     // auto itemsInArea = drawer->items(QRect(start.toPoint(), end.toPoint()));
     // for (auto item: itemsInArea) {
     //     item->setSelected(true);
@@ -84,8 +86,10 @@ void SelectionTool::painter(QPaintEvent *event, QGraphicsView *drawer) {
     // for (auto item: selectedItems) {
     //     item->moveBy((end.x())-start.x(), end.y()-start.y());
     // }
+    if (!lastSelectionBoundary) {
+        painter.drawRect(QRect(start.toPoint(), end.toPoint()));
+    }
 
-    // painter.drawRect(QRect(start.toPoint(), end.toPoint()));
 }
 
 QGraphicsItem* SelectionTool::createItem() {
