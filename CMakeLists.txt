@@ -55,13 +55,8 @@ include(cmake/CompilerWarnings.cmake)
 ##########################################################
 # Project files, packages, libraries and so on
 ##########################################################
-<<<<<<< HEAD
 find_package(Qt6 REQUIRED COMPONENTS Widgets Svg)
 set (RESOURCE_FILE icons/resource.qrc)
-=======
-find_package(Qt6 REQUIRED COMPONENTS Widgets Svg Gui)
-
->>>>>>> refs/remotes/origin/main
 #! Project main executable source compilation
 file(GLOB_RECURSE PROJECT_INCLUDES include/*.h)
 
@@ -77,15 +72,11 @@ src/ToolBar.cpp
 src/Canvas.cpp
 src/Button.cpp
 src/Layer.cpp
-<<<<<<< HEAD
 ${RESOURCE_FILE}
-)
-
-target_link_libraries(${PROJECT_NAME} Qt6::Widgets Qt6::Svg)
-=======
 src/Tool.cpp)
+
+
 target_link_libraries(${PROJECT_NAME} Qt6::Widgets Qt6::Svg Qt6::Gui)
->>>>>>> refs/remotes/origin/main
 set_target_properties(${PROJECT_NAME} PROPERTIES
                 WIN32_EXECUTABLE ON
                 MACOSX_BUNDLE ON

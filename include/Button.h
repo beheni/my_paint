@@ -8,6 +8,5 @@ class Button: public QToolButton{
 public:
     explicit Button(QWidget* parent = nullptr);
     ~Button() override = default;
-
 };
 #endif //MY_PAINT_BUTTON_H

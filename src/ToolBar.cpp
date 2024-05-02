@@ -50,7 +50,7 @@ void ToolBar::onSelection(){
     QMessageBox* popup = new QMessageBox(this);
     popup->setText("Selection");
     popup->show();
-}   q
+}
 
 void ToolBar::onLine(){
     QMessageBox* popup = new QMessageBox(this);
