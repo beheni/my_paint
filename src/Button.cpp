@@ -6,3 +6,11 @@ Button::Button(QWidget *parent) : QToolButton(parent) {
     setCheckable(true);
     setAutoExclusive(true);
 }
+
+Tool* Button::tool(){
+    return tool_;
+}
+
+void Button::setTool(Tool *tool){
+    tool_ = tool;
+}
