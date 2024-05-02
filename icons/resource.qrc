@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/">
+        <file>triangle.png</file>
+        <file>text.png</file>
+        <file>select.png</file>
+        <file>rectangle.png</file>
+        <file>rect.svg</file>
+        <file>rect.png</file>
+        <file>poly.png</file>
+        <file>load.png</file>
+        <file>line.png</file>
+        <file>ellipse.png</file>
+    </qresource>
+</RCC>

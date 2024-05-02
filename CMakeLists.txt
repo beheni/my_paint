@@ -56,25 +56,30 @@ include(cmake/CompilerWarnings.cmake)
 # Project files, packages, libraries and so on
 ##########################################################
 find_package(Qt6 REQUIRED COMPONENTS Widgets Svg)
-
+set (RESOURCE_FILE icons/resource.qrc)
 #! Project main executable source compilation
 file(GLOB_RECURSE PROJECT_INCLUDES include/*.h)
-add_executable(${PROJECT_NAME} src/main.cpp src/form.ui ${PROJECT_INCLUDES}
+
+#! Put path to your project headers
+set(CMAKE_AUTOMOC ON) 
+set(CMAKE_AUTORCC ON) 
+set(CMAKE_AUTOUIC ON)
+
+add_executable(${PROJECT_NAME} src/main.cpp  ${PROJECT_INCLUDES}
 src/MainWindow.cpp
 src/Menu.cpp
 src/ToolBar.cpp
 src/Canvas.cpp
 src/Button.cpp
-src/Layer.cpp)
+src/Layer.cpp
+${RESOURCE_FILE}
+)
+
 target_link_libraries(${PROJECT_NAME} Qt6::Widgets Qt6::Svg)
 set_target_properties(${PROJECT_NAME} PROPERTIES
-		WIN32_EXECUTABLE ON
-		MACOSX_BUNDLE ON
+                WIN32_EXECUTABLE ON
+                MACOSX_BUNDLE ON
 )
-#! Put path to your project headers
-set(CMAKE_AUTOMOC ON) 
-set(CMAKE_AUTORCC ON) 
-set(CMAKE_AUTOUIC ON)
 #! Add external packages
 # options_parser requires boost::program_options library
 find_package(Boost 1.71.0 COMPONENTS program_options system REQUIRED)
