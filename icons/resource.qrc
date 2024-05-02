@@ -10,5 +10,6 @@
         <file>load.png</file>
         <file>line.png</file>
         <file>ellipse.png</file>
+        <file>brush.png</file>
     </qresource>
 </RCC>

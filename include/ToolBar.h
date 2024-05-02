@@ -11,6 +11,7 @@ public:
 private slots:
     void onSelection();
     // void onSelectionArea();
+    void onBrush();
     void onLine();
     void onRect();
     void onTriangle();

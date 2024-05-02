@@ -12,6 +12,10 @@ ToolBar::ToolBar(QWidget *parent) : QToolBar(parent) {
     connect(selection, &Button::clicked, this, &ToolBar::onSelection);
     selection->setIcon(QIcon(":/select.png"));
 
+    Button *brush = new Button(this);
+    connect(brush, &Button::clicked, this, &ToolBar::onBrush);
+    brush->setIcon(QIcon(":/brush.png"));
+
     Button *line = new Button(this);
     connect(line, &Button::clicked, this, &ToolBar::onLine);
     line->setIcon(QIcon(":/line.png"));
@@ -38,6 +42,7 @@ ToolBar::ToolBar(QWidget *parent) : QToolBar(parent) {
 
     // QVBoxLayout *layout = new QVBoxLayout(this);
     addWidget(selection);
+    addWidget(brush);
     addWidget(line);
     addWidget(rect);
     addWidget(triangle);
@@ -49,6 +54,12 @@ ToolBar::ToolBar(QWidget *parent) : QToolBar(parent) {
 void ToolBar::onSelection(){
     QMessageBox* popup = new QMessageBox(this);
     popup->setText("Selection");
+    popup->show();
+}
+
+void ToolBar::onBrush(){
+    QMessageBox* popup = new QMessageBox(this);
+    popup->setText("Brush");
     popup->show();
 }
 

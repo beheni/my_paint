@@ -15,6 +15,7 @@ MainWindow::MainWindow(){
     menu = new MenuBar(this);
     menu->setObjectName("menu");
     setMenuBar(menu);
+    menu->setCanvas(canvas);
 
     toolBar = new ToolBar(this);
     toolBar->setObjectName("toolbar");
