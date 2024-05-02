@@ -2,14 +2,12 @@
 #include "Button.h"
 #include <QIcon>
 #include <QMessageBox>
+#include "Canvas.h"
 
-ToolBar::ToolBar(QWidget *parent) : QToolBar(parent) {
-    setOrientation(Qt::Vertical);
-    setMovable(false);
-    setFloatable(false);
-
+void ToolBar::setup(){
     Button *selection = new Button(this);
-    connect(selection, &Button::clicked, this, &ToolBar::onSelection);
+    selection->setTool(new DrawerTool());
+    connect(selection, &Button::clicked, canvas, [this, selection](){canvas->onToolChange(selection->tool());});
     selection->setIcon(QIcon(":/select.png"));
 
     Button *brush = new Button(this);
@@ -17,27 +15,33 @@ ToolBar::ToolBar(QWidget *parent) : QToolBar(parent) {
     brush->setIcon(QIcon(":/brush.png"));
 
     Button *line = new Button(this);
-    connect(line, &Button::clicked, this, &ToolBar::onLine);
+    line->setTool(new DrawerTool());
+    connect(line, &Button::clicked, canvas, [this, line](){canvas->onToolChange(line->tool());});
     line->setIcon(QIcon(":/line.png"));
 
     Button *rect = new Button(this);
-    connect(rect, &Button::clicked, this, &ToolBar::onRect);
+    rect->setTool(new DrawerTool());
+    connect(rect, &Button::clicked, canvas, [this, rect](){canvas->onToolChange(rect->tool());});
     rect->setIcon(QIcon(":/rect.png"));
 
     Button *triangle = new Button(this);
-    connect(triangle, &Button::clicked, this, &ToolBar::onTriangle);
+    triangle->setTool(new DrawerTool());
+    connect(triangle, &Button::clicked, canvas,  [this, triangle](){canvas->onToolChange(triangle->tool());});
     triangle->setIcon(QIcon(":/triangle.png"));
 
     Button *ellipse = new Button(this);
-    connect(ellipse, &Button::clicked, this, &ToolBar::onEllipse);
+    ellipse->setTool(new DrawerTool());
+    connect(ellipse, &Button::clicked, canvas,  [this, ellipse](){canvas->onToolChange(ellipse->tool());});
     ellipse->setIcon(QIcon(":/ellipse.png"));
 
     Button *poly = new Button(this);
-    connect(poly, &Button::clicked, this, &ToolBar::onPoly);
+    poly->setTool(new DrawerTool());
+    connect(poly, &Button::clicked, canvas,  [this, poly](){canvas->onToolChange(poly->tool());});
     poly->setIcon(QIcon(":/poly.png"));
 
     Button *text = new Button(this);
-    connect(text, &Button::clicked, this, &ToolBar::onText);
+    text->setTool(new DrawerTool());
+    connect(text, &Button::clicked, canvas,  [this, text](){canvas->onToolChange(text->tool());});
     text->setIcon(QIcon(":/text.png"));
 
     // QVBoxLayout *layout = new QVBoxLayout(this);
@@ -51,12 +55,15 @@ ToolBar::ToolBar(QWidget *parent) : QToolBar(parent) {
     addWidget(text);
 }
 
-void ToolBar::onSelection(){
-    QMessageBox* popup = new QMessageBox(this);
-    popup->setText("Selection");
-    popup->show();
+ToolBar::ToolBar(QWidget *parent) : QToolBar(parent) {
+    setOrientation(Qt::Vertical);
+    setMovable(false);
+    setFloatable(false);
+
+
 }
 
+<<<<<<< HEAD
 void ToolBar::onBrush(){
     QMessageBox* popup = new QMessageBox(this);
     popup->setText("Brush");
@@ -106,3 +113,5 @@ void ToolBar::onText(){
 //     popup->show();
 
 // }
+=======
+>>>>>>> refs/remotes/origin/main

@@ -23,6 +23,8 @@ MainWindow::MainWindow(){
 
     canvas = new Canvas(this);
     scene = new QGraphicsScene(this);
+    toolBar->setCanvas(canvas);
+    toolBar->setup();
     canvas->setScene(scene);
     canvas->scene()->setSceneRect(0, 0, canvas->width(), canvas->height());
     canvas->setObjectName("canvas");

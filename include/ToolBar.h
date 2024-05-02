@@ -1,23 +1,16 @@
 #ifndef MY_PAINT_TOOLBAR_H
 #define MY_PAINT_TOOLBAR_H
 
+#include "Canvas.h"
+
 #include <QToolBar>
 class ToolBar: public QToolBar{
-    Q_OBJECT    
+    Q_OBJECT
+    Canvas* canvas;
 public:
+    void setCanvas(Canvas* canvas_) { canvas = canvas_; }
     explicit ToolBar(QWidget *parent = nullptr);
     ~ToolBar() override = default;
-
-private slots:
-    void onSelection();
-    // void onSelectionArea();
-    void onBrush();
-    void onLine();
-    void onRect();
-    void onTriangle();
-    void onEllipse();
-    void onPoly();
-    void onText();
-    // void onBezier(); //for later
+    void setup();
 };
 #endif //MY_PAINT_TOOLBAR_H

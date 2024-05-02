@@ -1,9 +1,9 @@
-    #include "Canvas.h"
+#include "Canvas.h"
 #include <QGraphicsPathItem>
 #include <QStyleOptionGraphicsItem>
 
 Canvas::Canvas(QWidget* parent): QGraphicsView(parent){
-
+    tool_ = nullptr;
     setRenderHint(QPainter::Antialiasing);
     setRenderHint(QPainter::SmoothPixmapTransform);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -21,11 +21,7 @@ void Canvas::resizeEvent(QResizeEvent *event) {
 
 void Canvas::paintEvent(QPaintEvent *event) {
     QGraphicsView::paintEvent(event);
-    QPainter painter(viewport());
-    painter.setRenderHint(QPainter::Antialiasing);
-    painter.setPen(QPen(Qt::black, 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
-    painter.setBrush(Qt::NoBrush);
-    painter.drawPath(path);
+    if (tool_) tool_->paint(event, viewport());
     qDebug() << scene()->items().size();
 }
 
@@ -34,22 +30,26 @@ void Canvas::mousePressEvent(QMouseEvent *event) {
     path.moveTo(event->pos());
     if (event->button() == Qt::LeftButton) {
         drawing = true;
-        path.lineTo(event->pos());
+        if (tool_) tool_->mousePressEvent(event);
     }
 }
 void Canvas::mouseMoveEvent(QMouseEvent *event) {
     if ((event->buttons() & Qt::LeftButton) && drawing) {
-        path.lineTo(event->pos());
+        if (tool_) tool_->mouseMoveEvent(event);
         scene()->update();
     }
 }
 
 void Canvas::mouseReleaseEvent(QMouseEvent *event) {
     if (event->button() == Qt::LeftButton && drawing) {
-        path.lineTo(event->pos());
+        if (tool_) tool_->mouseReleaseEvent(event);
         drawing = false;
-        QGraphicsPathItem *item = new QGraphicsPathItem(path);
-        scene()->addItem(item);
-        path.clear();
+        if (tool_) scene()->addItem(tool_->newItem());
     }
 }
+
+void Canvas::onToolChange(Tool* tool) {
+    tool_ = tool;
+    qDebug() << "ok lol";
+}
+
