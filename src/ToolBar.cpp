@@ -11,7 +11,8 @@ void ToolBar::setup(){
     selection->setIcon(QIcon(":/select.png"));
 
     Button *brush = new Button(this);
-    connect(brush, &Button::clicked, this, &ToolBar::onBrush);
+    brush->setTool(new DrawerTool());
+    connect(brush, &Button::clicked, canvas, [this, brush](){canvas->onToolChange(brush->tool());});
     brush->setIcon(QIcon(":/brush.png"));
 
     Button *line = new Button(this);
