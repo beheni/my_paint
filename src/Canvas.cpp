@@ -21,7 +21,7 @@ void Canvas::resizeEvent(QResizeEvent *event) {
 
 void Canvas::paintEvent(QPaintEvent *event) {
     QGraphicsView::paintEvent(event);
-    if (tool_) tool_->paint(event, viewport());
+    if (tool_) tool_->paint(event, this);
     qDebug() << scene()->items().size();
 }
 
@@ -30,21 +30,25 @@ void Canvas::mousePressEvent(QMouseEvent *event) {
     path.moveTo(event->pos());
     if (event->button() == Qt::LeftButton) {
         drawing = true;
-        if (tool_) tool_->mousePressEvent(event);
+        if (tool_) tool_->mousePressCallback(event, this);
     }
 }
 void Canvas::mouseMoveEvent(QMouseEvent *event) {
     if ((event->buttons() & Qt::LeftButton) && drawing) {
-        if (tool_) tool_->mouseMoveEvent(event);
+        if (tool_) tool_->mouseMoveCallback(event, this);
         scene()->update();
     }
 }
 
 void Canvas::mouseReleaseEvent(QMouseEvent *event) {
     if (event->button() == Qt::LeftButton && drawing) {
-        if (tool_) tool_->mouseReleaseEvent(event);
+        if (tool_) tool_->mouseReleaseCallback(event, this);
         drawing = false;
-        if (tool_) scene()->addItem(tool_->newItem());
+        if (tool_) {
+            auto newItem = tool_->newItem();
+            if (newItem) scene()->addItem(newItem);
+            // scene()->addItem(tool_->newItem());
+        }
     }
 }
 

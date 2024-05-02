@@ -6,7 +6,7 @@
 
 void ToolBar::setup(){
     Button *selection = new Button(this);
-    selection->setTool(new DrawerTool());
+    selection->setTool(new SelectionTool());
     connect(selection, &Button::clicked, canvas, [this, selection](){canvas->onToolChange(selection->tool());});
     selection->setIcon(QIcon(":/select.png"));
 
@@ -21,7 +21,7 @@ void ToolBar::setup(){
     line->setIcon(QIcon(":/line.png"));
 
     Button *rect = new Button(this);
-    rect->setTool(new DrawerTool());
+    rect->setTool(new RectTool());
     connect(rect, &Button::clicked, canvas, [this, rect](){canvas->onToolChange(rect->tool());});
     rect->setIcon(QIcon(":/rect.png"));
 

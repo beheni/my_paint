@@ -18,7 +18,6 @@ public:
     Canvas(QWidget *parent = nullptr);
     ~Canvas() override = default;
 
-
     void resizeEvent(QResizeEvent *event) override;
     void mousePressEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
