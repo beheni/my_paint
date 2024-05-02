@@ -12,11 +12,5 @@ int main(int argc, char **argv)
     w.setFixedSize(800, 600);
     w.show();
 
-
-    // QPushButton button;
-    // button.setText("My text");
-    // button.setToolTip("A tooltip");
-    // button.show();
-
     return QApplication::exec();
 }

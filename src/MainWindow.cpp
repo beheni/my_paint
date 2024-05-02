@@ -15,7 +15,7 @@ MainWindow::MainWindow(){
     menu = new MenuBar(this);
     menu->setObjectName("menu");
     setMenuBar(menu);
-    menu->setCanvas(canvas);
+
 
     toolBar = new ToolBar(this);
     toolBar->setObjectName("toolbar");
@@ -25,6 +25,7 @@ MainWindow::MainWindow(){
     scene = new QGraphicsScene(this);
     toolBar->setCanvas(canvas);
     toolBar->setup();
+    menu->setCanvas(canvas);
     canvas->setScene(scene);
     canvas->scene()->setSceneRect(0, 0, canvas->width(), canvas->height());
     canvas->setObjectName("canvas");
