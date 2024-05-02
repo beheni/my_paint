@@ -34,16 +34,11 @@ void MenuBar::setCanvas(Canvas *canvas_) {
 Menu::Menu(const QString &title, QWidget *parent) : QMenu(title, parent) {}
 
 void MenuBar::onSave() {
-    // QMessageBox* popup = new QMessageBox(this);
-    // popup->setText("Save");
-    // popup->show();
     QSvgGenerator generator;
     generator.setFileName("canvas.svg");
-    qDebug() << canvas->sceneRect();
-    qDebug() << canvas->height() << " " << canvas->width();
 
-    generator.setSize(QSize(800, 600));
-    generator.setViewBox(QRect(0, 0, 800, 600)); //size to be changed
+    generator.setSize(canvas->size());
+    generator.setViewBox(canvas->scene()->sceneRect()); //size to be changed
     QPainter painter;
     painter.begin(&generator);
     canvas->render(&painter);
