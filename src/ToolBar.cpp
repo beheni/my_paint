@@ -31,7 +31,7 @@ void ToolBar::setup(){
     triangle->setIcon(QIcon(":/triangle.png"));
 
     Button *ellipse = new Button(this);
-    ellipse->setTool(new DrawerTool());
+    ellipse->setTool(new EllipseTool());
     connect(ellipse, &Button::clicked, canvas,  [this, ellipse](){canvas->onToolChange(ellipse->tool());});
     ellipse->setIcon(QIcon(":/ellipse.png"));
 

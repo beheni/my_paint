@@ -156,3 +156,33 @@ QGraphicsItem* RectTool::createItem() {
     QGraphicsRectItem *item = new QGraphicsRectItem(rect);
     return item;
 }
+
+void EllipseTool::mousePress(QMouseEvent *event, QGraphicsView* drawer) {
+    rect.setTopLeft(event->pos());
+    rect.setBottomRight(event->pos());
+}
+
+void EllipseTool::mouseMove(QMouseEvent *event, QGraphicsView* drawer) {
+    rect.setBottomRight(event->pos());
+}
+
+void EllipseTool::mouseRelease(QMouseEvent *event, QGraphicsView* drawer) {
+    rect.setBottomRight(event->pos());
+}
+
+void EllipseTool::painter(QPaintEvent *event, QGraphicsView* drawer) {
+    QPainter painter(drawer->viewport());
+    painter.setRenderHint(QPainter::Antialiasing);
+    painter.setPen(QPen(Qt::black, 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+    painter.setBrush(Qt::NoBrush);
+    painter.drawEllipse(rect);
+    // painter.fillRect(rect, Qt::blue);
+}
+
+QGraphicsItem* EllipseTool::createItem() {
+    QGraphicsEllipseItem *item = new QGraphicsEllipseItem(rect);
+    return item;
+}
+
+
+

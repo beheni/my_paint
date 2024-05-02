@@ -63,5 +63,16 @@ protected:
     QGraphicsItem* createItem() override;
 };
 
+class EllipseTool: public Tool{
+    Q_OBJECT
+    QRectF rect;
+protected:
+    void mousePress(QMouseEvent *event, QGraphicsView* drawer) override;
+    void mouseMove(QMouseEvent *event, QGraphicsView* drawer) override;
+    void mouseRelease(QMouseEvent *event, QGraphicsView* drawer) override;
+    void painter(QPaintEvent *event, QGraphicsView* drawer) override;
+    QGraphicsItem* createItem() override;
+};
+
 
 #endif //MY_PAINT_TOOL_H
