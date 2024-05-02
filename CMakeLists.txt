@@ -55,8 +55,13 @@ include(cmake/CompilerWarnings.cmake)
 ##########################################################
 # Project files, packages, libraries and so on
 ##########################################################
+<<<<<<< HEAD
 find_package(Qt6 REQUIRED COMPONENTS Widgets Svg)
 set (RESOURCE_FILE icons/resource.qrc)
+=======
+find_package(Qt6 REQUIRED COMPONENTS Widgets Svg Gui)
+
+>>>>>>> refs/remotes/origin/main
 #! Project main executable source compilation
 file(GLOB_RECURSE PROJECT_INCLUDES include/*.h)
 
@@ -72,20 +77,23 @@ src/ToolBar.cpp
 src/Canvas.cpp
 src/Button.cpp
 src/Layer.cpp
+<<<<<<< HEAD
 ${RESOURCE_FILE}
 )
 
 target_link_libraries(${PROJECT_NAME} Qt6::Widgets Qt6::Svg)
+=======
+src/Tool.cpp)
+target_link_libraries(${PROJECT_NAME} Qt6::Widgets Qt6::Svg Qt6::Gui)
+>>>>>>> refs/remotes/origin/main
 set_target_properties(${PROJECT_NAME} PROPERTIES
                 WIN32_EXECUTABLE ON
                 MACOSX_BUNDLE ON
 )
 #! Add external packages
 # options_parser requires boost::program_options library
-find_package(Boost 1.71.0 COMPONENTS program_options system REQUIRED)
 target_include_directories(${PROJECT_NAME} PRIVATE include)
-target_include_directories(${PROJECT_NAME} PRIVATE ${Boost_INCLUDE_DIR})
-target_link_libraries(${PROJECT_NAME} Boost::program_options Boost::system)
+
 
 ##########################################################
 # Fixed CMakeLists.txt part
