@@ -1,4 +1,4 @@
-#include "Canvas.h"
+    #include "Canvas.h"
 #include <QGraphicsPathItem>
 #include <QStyleOptionGraphicsItem>
 

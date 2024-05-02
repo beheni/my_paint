@@ -15,9 +15,11 @@ MainWindow::MainWindow(){
     menu = new MenuBar(this);
     menu->setObjectName("menu");
     setMenuBar(menu);
+
     toolBar = new ToolBar(this);
     toolBar->setObjectName("toolbar");
     addToolBar(Qt::LeftToolBarArea, toolBar);
+
     canvas = new Canvas(this);
     scene = new QGraphicsScene(this);
     canvas->setScene(scene);
