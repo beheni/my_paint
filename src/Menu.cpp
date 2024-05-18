@@ -14,7 +14,8 @@ MenuBar::MenuBar(QWidget *parent) : QMenuBar(parent) {
     connect(saveAction, &QAction::triggered, this, &MenuBar::onSave);
 
     file->addSeparator();
-    file->addAction("Exit");
+    QAction* exitAction = file->addAction("Exit");
+    connect(exitAction, &QAction::triggered, this, &MenuBar::onExit);
     Menu *edit = new Menu("&Edit");
     Menu *view = new Menu("&View");
     Menu *help = new Menu("&Help");
@@ -43,4 +44,14 @@ void MenuBar::onSave() {
     painter.begin(&generator);
     canvas->render(&painter);
     painter.end();
+}
+
+void MenuBar::onExit() {
+    QMessageBox::StandardButton exit = QMessageBox::question(this, "Exit",
+                                                               tr("Are you sure want to exit?\n"),
+                                                               QMessageBox::Cancel | QMessageBox::No | QMessageBox::Yes,
+                                                               QMessageBox::Yes);
+    if (exit==QMessageBox::Yes) {
+        QApplication::quit();
+    }
 }

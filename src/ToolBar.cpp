@@ -45,15 +45,22 @@ void ToolBar::setup(){
     connect(text, &Button::clicked, canvas,  [this, text](){canvas->onToolChange(text->tool());});
     text->setIcon(QIcon(":/text.png"));
 
-    // QVBoxLayout *layout = new QVBoxLayout(this);
     addWidget(selection);
+    addSeparator();
     addWidget(brush);
+    addSeparator();
     addWidget(line);
+    addSeparator();
     addWidget(rect);
+    addSeparator();
     addWidget(triangle);
+    addSeparator();
     addWidget(ellipse);
+    addSeparator();
     addWidget(poly);
+    addSeparator();
     addWidget(text);
+    addSeparator();
 }
 
 ToolBar::ToolBar(QWidget *parent) : QToolBar(parent) {
