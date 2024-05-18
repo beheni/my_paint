@@ -58,6 +58,6 @@ void Canvas::mouseReleaseEvent(QMouseEvent *event) {
 
 void Canvas::onToolChange(Tool* tool) {
     tool_ = tool;
-    qDebug() << "ok lol";
+
 }
 
