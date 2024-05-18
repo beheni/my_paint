@@ -11,6 +11,7 @@ class MenuBar : public QMenuBar {
 public slots:
     void onSave();
     void onExit();
+    void onOpen();
 public:
     explicit MenuBar(QWidget *parent = nullptr);
     void setCanvas(Canvas *canvas);
