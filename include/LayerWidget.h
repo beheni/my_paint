@@ -18,12 +18,15 @@ public slots:
     void itemAdded(QGraphicsItem* item);
     void onLayerAdd();
     void onLayerRemove();
-    void onLayerSwap();
+    void onLayerUp();
+    void onLayerDown();
 signals:
     void layerRemove(size_t index);
+    void layerSwap(size_t index1, size_t index2);
 };
 
 class LayerWidgetItem: public QListWidgetItem{
+    static int count;
     QGraphicsItem* item;
     QString name;
 public:

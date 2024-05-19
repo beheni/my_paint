@@ -55,28 +55,47 @@ QString LayerWidgetItem::getName(){
     return name;
 }
 
+int LayerWidgetItem::count = 0;
+
 LayerWidgetItem::LayerWidgetItem(QListWidget* parent): QListWidgetItem(parent){
     item = nullptr;
-    name = "Layer";
+    name = "Layer" + QString::number(count++);
 }
 
 
 void LayerWidget::onLayerAdd(){
     LayerWidgetItem* layerItem = new LayerWidgetItem(this);
     layerItem->setText(layerItem->getName());
-    addItem(layerItem);
-    setCurrentRow(0);
+    insertItem(0, layerItem);
 }
 
 void LayerWidget::onLayerRemove(){
     auto selected = currentItem();
+    int row = currentRow();
     if (selected){
-        emit layerRemove(row(selected));
+        emit layerRemove(row);
         delete selected;
+    }
+    int size = count();
+    setCurrentRow(std::min(row, size-1));
+}
+
+void LayerWidget::onLayerUp(){
+    int row = currentRow();
+    if (row != 0 ){
+        auto item = takeItem(row);
+        insertItem(row-1, item);
+        setCurrentRow(row-1);
+        emit layerSwap(row, row-1);
     }
 }
 
-void LayerWidget::onLayerSwap(){
-    auto selected = currentItem();
-
+void LayerWidget::onLayerDown(){
+    int row = currentRow();
+    if (row != count()-1){
+        auto item = takeItem(row);
+        insertItem(row+1, item);
+        setCurrentRow(row+1);
+        emit layerSwap(row, row+1);
+    }
 }
