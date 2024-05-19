@@ -56,6 +56,7 @@ void Canvas::mouseReleaseEvent(QMouseEvent *event) {
 void Canvas::onToolChange(Tool* tool) {
     tool_ = tool;
     tool_->setToolColor(lastSelectedColor);
+    tool_->setToolThickness(lastSelectedThickness);
 
 }
 
@@ -67,6 +68,7 @@ void Canvas::onColorChange(const QColor& color) {
     }
 }
 
+<<<<<<< HEAD
 void Canvas::onLayerAdd() {
     Layer* newLayer = new Layer();
     layers_.insert(0, newLayer);
@@ -110,4 +112,12 @@ QMap<Layer*, QList<QGraphicsItem*>>& Canvas::layerItems(){
 
 void Canvas::setCurrentLayer(Layer* layer){
     currentLayer_ = layer;
+=======
+
+void Canvas::onThicknessChange(int thickness) {
+    lastSelectedThickness = thickness;
+    if (tool_) {
+        tool_->setToolThickness(thickness);
+    }
+>>>>>>> refs/remotes/origin/main
 }

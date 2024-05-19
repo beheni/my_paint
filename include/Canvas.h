@@ -16,6 +16,7 @@ class Canvas: public QGraphicsView{
     bool drawing;
     Tool* tool_;
     QColor lastSelectedColor = QColor(0, 0, 0);
+    int lastSelectedThickness = 1;
     QPainterPath path;
     Layer* currentLayer_;
     QList<Layer*> layers_;
@@ -37,10 +38,14 @@ public:
 public slots:
     void onToolChange(Tool* tool);
     void onColorChange(const QColor& color);
+<<<<<<< HEAD
     void onLayerChange(int index);
     void onLayerAdd();
     void onLayerRemove(size_t index);
     void onLayerSwap(Layer* layer1, Layer* layer2);
+=======
+    void onThicknessChange(int thickness);
+>>>>>>> refs/remotes/origin/main
 signals:
     void objectAdded(QGraphicsItem* item);
 };

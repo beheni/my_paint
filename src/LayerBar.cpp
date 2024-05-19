@@ -14,10 +14,11 @@ LayerBar::LayerBar(QWidget *parent): QToolBar(parent){
 
     colorPicker_ = new QColorDialog(this);
     colorPicker_->setOption(QColorDialog::NoButtons);
+    colorPicker_->setCurrentColor(QColor(0, 0, 0));
 
     thicknessSlider_ = new QSlider();
     thicknessSlider_->setFocusPolicy(Qt::StrongFocus);
-    thicknessSlider_->setRange(1, 10);
+    thicknessSlider_->setRange(1, 40);
     thicknessSlider_->setOrientation(Qt::Horizontal);
     thicknessSlider_->setSliderPosition(2);
     thicknessSlider_->setSingleStep(1);
@@ -60,6 +61,7 @@ QColorDialog* LayerBar::colorPicker(){
     return colorPicker_;
 }
 
+<<<<<<< HEAD
 QPushButton* LayerBar::addLayer(){
     return addLayer_;
 }
@@ -74,4 +76,8 @@ QPushButton* LayerBar::upLayer(){
 
 QPushButton* LayerBar::downLayer(){
     return downLayer_;
+=======
+QSlider* LayerBar::thicknessSlider() {
+    return thicknessSlider_;
+>>>>>>> refs/remotes/origin/main
 }

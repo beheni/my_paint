@@ -14,9 +14,11 @@ class Tool: public QWidget{
     Q_OBJECT
 protected:
     QColor color_;
+    int thickness_;
 public:
     explicit Tool();
     void setToolColor(const QColor& color);
+    void setToolThickness(int thickness);
     void mousePressCallback(QMouseEvent *event, QGraphicsView* drawer);
     void mouseMoveCallback(QMouseEvent *event,  QGraphicsView* drawer);
     void mouseReleaseCallback(QMouseEvent *event, QGraphicsView* drawer);
@@ -70,6 +72,17 @@ protected:
 class EllipseTool: public Tool{
     Q_OBJECT
     QRectF rect;
+protected:
+    void mousePress(QMouseEvent *event, QGraphicsView* drawer) override;
+    void mouseMove(QMouseEvent *event, QGraphicsView* drawer) override;
+    void mouseRelease(QMouseEvent *event, QGraphicsView* drawer) override;
+    void painter(QPaintEvent *event, QGraphicsView* drawer) override;
+    QGraphicsItem* createItem() override;
+};
+
+class LineTool: public Tool{
+    Q_OBJECT
+    QLineF line;
 protected:
     void mousePress(QMouseEvent *event, QGraphicsView* drawer) override;
     void mouseMove(QMouseEvent *event, QGraphicsView* drawer) override;

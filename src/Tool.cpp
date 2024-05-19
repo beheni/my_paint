@@ -30,6 +30,10 @@ void Tool::setToolColor(const QColor &color = QColor(0, 0, 0)) {
     color_ = color;
 }
 
+void Tool::setToolThickness(int thickness) {
+    thickness_ = thickness;
+}
+
 void SelectionTool::mousePress(QMouseEvent *event, QGraphicsView* drawer) {
     auto clickCoord = event->pos();
     if (lastSelectionBoundary && !lastSelectionBoundary->contains(clickCoord)) {
@@ -124,14 +128,14 @@ void DrawerTool::mouseRelease(QMouseEvent *event, QGraphicsView* drawer) {
 void DrawerTool::painter(QPaintEvent *event, QGraphicsView* drawer) {
     QPainter painter(drawer->viewport());
     painter.setRenderHint(QPainter::Antialiasing);
-    painter.setPen(QPen(color_, 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+    painter.setPen(QPen(color_, thickness_, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
     painter.setBrush(Qt::NoBrush);
     painter.drawPath(path);
 }
 
 QGraphicsItem* DrawerTool::createItem() {
     QGraphicsPathItem *item = new QGraphicsPathItem(path);
-    item->setPen(QPen(color_, 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+    item->setPen(QPen(color_, thickness_, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
     path.clear();
     return item;
 }
@@ -152,14 +156,14 @@ void RectTool::mouseRelease(QMouseEvent *event, QGraphicsView* drawer) {
 void RectTool::painter(QPaintEvent *event, QGraphicsView* drawer) {
     QPainter painter(drawer->viewport());
     painter.setRenderHint(QPainter::Antialiasing);
-    painter.setPen(QPen(color_, 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+    painter.setPen(QPen(color_, thickness_, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
     painter.setBrush(Qt::NoBrush);
     painter.drawRect(rect);
 }
 
 QGraphicsItem* RectTool::createItem() {
     QGraphicsRectItem *item = new QGraphicsRectItem(rect);
-    item->setPen(QPen(color_, 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+    item->setPen(QPen(color_, thickness_, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
     return item;
 }
 
@@ -179,7 +183,7 @@ void EllipseTool::mouseRelease(QMouseEvent *event, QGraphicsView* drawer) {
 void EllipseTool::painter(QPaintEvent *event, QGraphicsView* drawer) {
     QPainter painter(drawer->viewport());
     painter.setRenderHint(QPainter::Antialiasing);
-    painter.setPen(QPen(color_, 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+    painter.setPen(QPen(color_, thickness_, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
     painter.setBrush(Qt::NoBrush);
     painter.drawEllipse(rect);
     // painter.fillRect(rect, Qt::blue);
@@ -187,7 +191,35 @@ void EllipseTool::painter(QPaintEvent *event, QGraphicsView* drawer) {
 
 QGraphicsItem* EllipseTool::createItem() {
     QGraphicsEllipseItem *item = new QGraphicsEllipseItem(rect);
-    item->setPen(QPen(color_, 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+    item->setPen(QPen(color_, thickness_, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+    return item;
+}
+
+
+void LineTool::mousePress(QMouseEvent *event, QGraphicsView* drawer) {
+    line.setP1(event->pos());
+    line.setP2(event->pos());
+}
+
+void LineTool::mouseMove(QMouseEvent *event, QGraphicsView* drawer) {
+    line.setP2(event->pos());
+}
+
+void LineTool::mouseRelease(QMouseEvent *event, QGraphicsView* drawer) {
+    line.setP2(event->pos());
+}
+
+void LineTool::painter(QPaintEvent *event, QGraphicsView* drawer) {
+    QPainter painter(drawer->viewport());
+    painter.setRenderHint(QPainter::Antialiasing);
+    painter.setPen(QPen(color_, thickness_, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+    painter.setBrush(Qt::NoBrush);
+    painter.drawLine(line);
+}
+
+QGraphicsItem* LineTool::createItem() {
+    QGraphicsLineItem *item = new QGraphicsLineItem(line);
+    item->setPen(QPen(color_, thickness_, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
     return item;
 }
 

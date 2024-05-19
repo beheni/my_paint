@@ -57,6 +57,8 @@ MainWindow::MainWindow(){
     connect(layerBar->layerWidget(), &LayerWidget::layerRemove, canvas, &Canvas::onLayerRemove);
     connect(layerBar->layerWidget(), &QListWidget::currentRowChanged, canvas, &Canvas::onLayerChange);
 
+    connect(layerBar->thicknessSlider(), &QSlider::valueChanged, canvas, &Canvas::onThicknessChange);
+
 }
 
 void MainWindow::resizeEvent(QResizeEvent* event){
