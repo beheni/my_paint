@@ -39,7 +39,6 @@ MainWindow::MainWindow(){
     toolBar->setCanvas(canvas);
     toolBar->setup();
 
-    menu->setCanvas(canvas);
     canvas->setScene(scene);
     canvas->scene()->setSceneRect(0, 0, canvas->width(), canvas->height());
     canvas->setObjectName("canvas");

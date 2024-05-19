@@ -2,11 +2,10 @@
 #define MY_PAINT_MENU_H
 #include <QMenu>
 #include <QMenuBar>
-#include "Canvas.h"
+#include <QAction>
 
 class MenuBar : public QMenuBar {
     Q_OBJECT
-    Canvas *canvas;
     QAction *openAction_;
     QAction *saveAction_;
     QAction *newAction_;
@@ -23,7 +22,6 @@ class MenuBar : public QMenuBar {
 
 public:
     explicit MenuBar(QWidget *parent = nullptr);
-    void setCanvas(Canvas *canvas);
     QAction *openAction();
     QAction *saveAction();
     QAction *newAction();

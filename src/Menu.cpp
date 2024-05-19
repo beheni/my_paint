@@ -55,12 +55,6 @@ MenuBar::MenuBar(QWidget *parent) : QMenuBar(parent) {
     addMenu(help);
 
 }
-
-void MenuBar::setCanvas(Canvas *canvas_) {
-    canvas = canvas_;
-}
-
-
 Menu::Menu(const QString &title, QWidget *parent) : QMenu(title, parent) {}
 
 
