@@ -73,7 +73,11 @@ src/Canvas.cpp
 src/Button.cpp
 src/Layer.cpp
 ${RESOURCE_FILE}
-src/Tool.cpp)
+src/Tool.cpp
+include/LayerBar.h
+src/LayerBar.cpp
+src/LayerWidget.cpp
+include/LayerWidget.h)
 
 
 target_link_libraries(${PROJECT_NAME} Qt6::Widgets Qt6::Svg Qt6::Gui)

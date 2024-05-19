@@ -13,13 +13,6 @@ Canvas::Canvas(QWidget* parent): QGraphicsView(parent){
     show();
 }
 
-// void Canvas::resizeEvent(QResizeEvent *event) {
-//     QGraphicsView::resizeEvent(event);
-//     // scene()->setSceneRect(0,0, width(), height());
-//     // qDebug() << "Scene size: " << scene()->sceneRect() << "View size" << size();
-//     // fitInView(sceneRect(), Qt::KeepAspectRatioByExpanding);
-// }
-
 void Canvas::paintEvent(QPaintEvent *event) {
     QGraphicsView::paintEvent(event);
     if (tool_) tool_->paint(event, this);
@@ -47,8 +40,10 @@ void Canvas::mouseReleaseEvent(QMouseEvent *event) {
         if (tool_) tool_->mouseReleaseCallback(event, this);
         if (tool_) {
             auto newItem = tool_->newItem();
-            if (newItem)
+            if (newItem){
                 scene()->addItem(newItem);
+                emit objectAdded(newItem);
+            }
             else
                 scene()->update();
             // scene()->addItem(tool_->newItem());

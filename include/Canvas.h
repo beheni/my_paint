@@ -25,5 +25,7 @@ public:
     void paintEvent(QPaintEvent *event) override;    
 public slots:
     void onToolChange(Tool* tool);
+signals:
+    void objectAdded(QGraphicsItem* item);
 };
 #endif

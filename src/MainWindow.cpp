@@ -20,20 +20,30 @@ MainWindow::MainWindow(){
 
     toolBar = new ToolBar(this);
     toolBar->setObjectName("toolbar");
-    addToolBar(Qt::LeftToolBarArea, toolBar);
 
+    layerBar = new LayerBar(this);
+    layerBar->setObjectName("layerbar");
+
+
+    addToolBar(Qt::LeftToolBarArea, toolBar);
+    addToolBar(Qt::RightToolBarArea, layerBar);
     canvas = new Canvas(this);
     scene = new QGraphicsScene(this);
     toolBar->setCanvas(canvas);
     toolBar->setup();
+
     menu->setCanvas(canvas);
     canvas->setScene(scene);
     canvas->scene()->setSceneRect(0, 0, canvas->width(), canvas->height());
     canvas->setObjectName("canvas");
+
+
     setCentralWidget(canvas);
     centralWidget()->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
     centralWidget()->setContentsMargins(0,0,0,0);
     centralWidget()->show();
+
+    connect(canvas, &Canvas::objectAdded, layerBar->layerWidget(), &LayerWidget::itemAdded);
 
 }
 

@@ -6,6 +6,7 @@
 #include "Canvas.h"
 #include "Menu.h"
 #include "ToolBar.h"
+#include "LayerBar.h"
 
 class MainWindow: public QMainWindow
 {
@@ -13,6 +14,7 @@ class MainWindow: public QMainWindow
     Canvas* canvas;
     MenuBar* menu;
     ToolBar* toolBar; //якась збірка тулів
+    LayerBar* layerBar;
     // Tool currentTool;
     QGraphicsScene * scene;
     QPainter * currentTool;
