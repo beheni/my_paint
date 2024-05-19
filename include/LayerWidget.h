@@ -4,10 +4,11 @@
 #include <QListWidget>
 #include <QGraphicsScene>
 #include <QListWidgetItem>
-
+#include <QSize>
 
 class LayerWidget : public QListWidget{
     Q_OBJECT
+    QSize iconSize;
 public:
     LayerWidget(QWidget *parent = nullptr);
     ~LayerWidget() override = default;
