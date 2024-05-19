@@ -56,6 +56,9 @@ MainWindow::MainWindow(){
     connect(layerBar->removeLayer(), &QPushButton::pressed, layerBar->layerWidget(), &LayerWidget::onLayerRemove);
     connect(layerBar->layerWidget(), &LayerWidget::layerRemove, canvas, &Canvas::onLayerRemove);
     connect(layerBar->layerWidget(), &QListWidget::currentRowChanged, canvas, &Canvas::onLayerChange);
+    connect(layerBar->layerWidget(), &LayerWidget::layerSwap, canvas, &Canvas::onLayerSwap);
+    connect(layerBar->upLayer(), &QPushButton::pressed, layerBar->layerWidget(), &LayerWidget::onLayerUp);
+    connect(layerBar->downLayer(), &QPushButton::pressed, layerBar->layerWidget(), &LayerWidget::onLayerDown);
 
     connect(layerBar->thicknessSlider(), &QSlider::valueChanged, canvas, &Canvas::onThicknessChange);
 

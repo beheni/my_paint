@@ -18,7 +18,7 @@ Canvas::Canvas(QWidget* parent): QGraphicsView(parent){
 void Canvas::paintEvent(QPaintEvent *event) {
     QGraphicsView::paintEvent(event);
     if (tool_) tool_->paint(event, this);
-    qDebug() << scene()->items().size();
+    // qDebug() << scene()->items().size();
 }
 
 
@@ -69,11 +69,13 @@ void Canvas::onColorChange(const QColor& color) {
 }
 
 void Canvas::onLayerAdd() {
+    qDebug() << "Layer added " << layers_.size();
     Layer* newLayer = new Layer();
     layers_.insert(0, newLayer);
     layerItems_[newLayer] = QList<QGraphicsItem*>();
     scene()->addItem(newLayer);
-    currentLayer_ = newLayer;
+    setZValues();
+    scene()->update();
 }
 
 void Canvas::onLayerRemove(size_t index){
@@ -81,19 +83,22 @@ void Canvas::onLayerRemove(size_t index){
     layers_.removeAt(index);
     scene()->removeItem(layer);
     layerItems_.remove(layer);
-    qDebug() << layers_.size();
+    qDebug() << "Layer removed " << index << " new size " << layers_.size();
+    setZValues();
     delete layer;
 }
 
-void Canvas::onLayerSwap(Layer* layer1, Layer* layer2){
-    int index1 = layers_.indexOf(layer1);
-    int index2 = layers_.indexOf(layer2);
-    layers_[index1] = layer2;
-    layers_[index2] = layer1;
+void Canvas::onLayerSwap(size_t index1, size_t index2){
+    qDebug() << "Layer swapped " << index1 << " " << index2;
+    layers_.swapItemsAt(index1, index2);
+    setZValues();
 }
 
 void Canvas::onLayerChange(int currentRow){
-    qDebug() << "ROW" << currentRow;
+    if (currentRow < 0 || currentRow >= layers_.size()){
+        return;
+    }
+    qDebug() << "chose layer " << currentRow;
     currentLayer_ = layers_[currentRow];
 }
 
@@ -118,4 +123,11 @@ void Canvas::onThicknessChange(int thickness) {
     if (tool_) {
         tool_->setToolThickness(thickness);
     }
+}
+
+void Canvas::setZValues(){
+    for(size_t i = 0; i<layers_.size(); ++i){
+        layers_[i]->setZValue(i);
+    }
+    scene()->update();
 }

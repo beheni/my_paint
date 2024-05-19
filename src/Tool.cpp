@@ -70,7 +70,6 @@ void SelectionTool::mouseMove(QMouseEvent *event, QGraphicsView* drawer) {
             selectedItems.insert(item);
             qDebug() << "You clicked on item" << item;
         }
-        qDebug() << "selected items count"<< selectedItems.size();
     }
 
 }

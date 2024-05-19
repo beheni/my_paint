@@ -3,6 +3,7 @@
 #include <QGraphicsItemGroup>
 
 class Layer: public QGraphicsItemGroup{
+    static int count;
     QString name;
 public:
     Layer(QGraphicsItem* parent = nullptr);
