@@ -74,4 +74,10 @@ QAction *MenuBar::newAction() {
     return newAction_;
 }
 
+QAction *MenuBar::helpAction() {
+    return helpAction_;
+}
+
+
+
 
