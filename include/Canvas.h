@@ -28,6 +28,7 @@ public:
 public slots:
     void onToolChange(Tool* tool);
     void onColorChange(const QColor& color);
+    void onThicknessChange(int thickness);
 signals:
     void objectAdded(QGraphicsItem* item);
 };

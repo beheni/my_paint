@@ -14,9 +14,11 @@ class Tool: public QWidget{
     Q_OBJECT
 protected:
     QColor color_;
+    int thickness_;
 public:
     explicit Tool();
     void setToolColor(const QColor& color);
+    void setToolThickness(int thickness);
     void mousePressCallback(QMouseEvent *event, QGraphicsView* drawer);
     void mouseMoveCallback(QMouseEvent *event,  QGraphicsView* drawer);
     void mouseReleaseCallback(QMouseEvent *event, QGraphicsView* drawer);

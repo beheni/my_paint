@@ -48,6 +48,8 @@ MainWindow::MainWindow(){
 
     connect(layerBar->colorPicker(), &QColorDialog::currentColorChanged, canvas, &Canvas::onColorChange);
 
+    connect(layerBar->thicknessSlider(), &QSlider::valueChanged, canvas, &Canvas::onThicknessChange);
+
 }
 
 void MainWindow::resizeEvent(QResizeEvent* event){

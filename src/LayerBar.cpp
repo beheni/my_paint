@@ -18,7 +18,7 @@ LayerBar::LayerBar(QWidget *parent): QToolBar(parent){
 
     thicknessSlider_ = new QSlider();
     thicknessSlider_->setFocusPolicy(Qt::StrongFocus);
-    thicknessSlider_->setRange(1, 10);
+    thicknessSlider_->setRange(1, 40);
     thicknessSlider_->setOrientation(Qt::Horizontal);
     thicknessSlider_->setSliderPosition(2);
     thicknessSlider_->setSingleStep(1);
@@ -60,4 +60,8 @@ LayerWidget* LayerBar::layerWidget(){
 
 QColorDialog* LayerBar::colorPicker(){
     return colorPicker_;
+}
+
+QSlider* LayerBar::thicknessSlider() {
+    return thicknessSlider_;
 }

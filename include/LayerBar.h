@@ -16,6 +16,7 @@ public:
     ~LayerBar() override = default;
     LayerWidget* layerWidget();
     QColorDialog* colorPicker();
+    QSlider* thicknessSlider();
 
 };
 
