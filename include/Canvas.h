@@ -13,7 +13,7 @@ class Canvas: public QGraphicsView{
     Q_OBJECT
     bool drawing;
     Tool* tool_;
-    QColor lastSelectedColor;
+    QColor lastSelectedColor = QColor(0, 0, 0);
     QPainterPath path;
 
 public:

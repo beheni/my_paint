@@ -3,6 +3,7 @@
 
 #include <QSet>
 #include <QWidget>
+#include <QColor>
 #include <QMouseEvent>
 #include <QPainterPath>
 #include <QGraphicsItem>
@@ -11,8 +12,11 @@
 
 class Tool: public QWidget{
     Q_OBJECT
+protected:
+    QColor color_;
 public:
     explicit Tool();
+    void setToolColor(const QColor& color);
     void mousePressCallback(QMouseEvent *event, QGraphicsView* drawer);
     void mouseMoveCallback(QMouseEvent *event,  QGraphicsView* drawer);
     void mouseReleaseCallback(QMouseEvent *event, QGraphicsView* drawer);
@@ -74,5 +78,9 @@ protected:
     QGraphicsItem* createItem() override;
 };
 
+
+//undo
+//redo
+//fill
 
 #endif //MY_PAINT_TOOL_H

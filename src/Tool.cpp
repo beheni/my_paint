@@ -26,6 +26,10 @@ void Tool::paint(QPaintEvent *event, QGraphicsView* drawer) {
     painter(event, drawer);
 }
 
+void Tool::setToolColor(const QColor &color = QColor(0, 0, 0)) {
+    color_ = color;
+}
+
 void SelectionTool::mousePress(QMouseEvent *event, QGraphicsView* drawer) {
     auto clickCoord = event->pos();
     if (lastSelectionBoundary && !lastSelectionBoundary->contains(clickCoord)) {
@@ -120,13 +124,14 @@ void DrawerTool::mouseRelease(QMouseEvent *event, QGraphicsView* drawer) {
 void DrawerTool::painter(QPaintEvent *event, QGraphicsView* drawer) {
     QPainter painter(drawer->viewport());
     painter.setRenderHint(QPainter::Antialiasing);
-    painter.setPen(QPen(Qt::black, 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+    painter.setPen(QPen(color_, 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
     painter.setBrush(Qt::NoBrush);
     painter.drawPath(path);
 }
 
 QGraphicsItem* DrawerTool::createItem() {
     QGraphicsPathItem *item = new QGraphicsPathItem(path);
+    item->setPen(QPen(color_, 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
     path.clear();
     return item;
 }
