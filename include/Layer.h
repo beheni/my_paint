@@ -1,29 +1,20 @@
 #ifndef MY_PAINT_LAYER_H
 #define MY_PAINT_LAYER_H
-#include <vector>
-#include <optional>
-#include <QWidget>
-#include <QPainter>
-#include <QMouseEvent>
-#include <QPainterPath>
-#include "Curve.h"
+#include <QGraphicsItemGroup>
 
-class Layer: public QWidget{
-    Q_OBJECT
+class Layer: public QGraphicsItemGroup{
+    QString name;
 public:
-    explicit Layer(QWidget *parent = nullptr);
-    std::vector<Curve> curves;
-    std::optional<Curve> activeCurve;
+    Layer(QGraphicsItem* parent = nullptr);
+    ~Layer() override = default;
 
-public:
-    void paintEvent(QPaintEvent *event) override;
-    void mousePressEvent(QMouseEvent *event) override;
-    void mouseMoveEvent(QMouseEvent *event) override;
-    void mouseReleaseEvent(QMouseEvent *event) override;
-    // void resizeEvent(QResizeEvent *event) override;
-    // void update();
-private:
-    bool drawing;
-    QPainterPath path;
+    QString getName();
+    void setName(const QString& name);
+
+    void addBatch(QList<QGraphicsItem*> items);
+    void removeBatch(QList<QGraphicsItem*> items);
+public slots:
+    void onCreate();
 };
+
 #endif //MY_PAINT_LAYER_H

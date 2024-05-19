@@ -5,6 +5,7 @@
 
 Canvas::Canvas(QWidget* parent): QGraphicsView(parent){
     tool_ = nullptr;
+
     setRenderHint(QPainter::Antialiasing);
     setRenderHint(QPainter::SmoothPixmapTransform);
     setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -42,7 +43,7 @@ void Canvas::mouseReleaseEvent(QMouseEvent *event) {
         if (tool_) {
             auto newItem = tool_->newItem();
             if (newItem){
-                scene()->addItem(newItem);
+                currentLayer_->addToGroup(newItem);
                 emit objectAdded(newItem);
             }
             else
@@ -64,4 +65,49 @@ void Canvas::onColorChange(const QColor& color) {
     if (tool_) {
         tool_->setToolColor(lastSelectedColor);
     }
+}
+
+void Canvas::onLayerAdd() {
+    Layer* newLayer = new Layer();
+    layers_.insert(0, newLayer);
+    layerItems_[newLayer] = QList<QGraphicsItem*>();
+    scene()->addItem(newLayer);
+    currentLayer_ = newLayer;
+}
+
+void Canvas::onLayerRemove(size_t index){
+    Layer* layer = layers_[index];
+    layers_.removeAt(index);
+    scene()->removeItem(layer);
+    layerItems_.remove(layer);
+    qDebug() << layers_.size();
+    delete layer;
+}
+
+void Canvas::onLayerSwap(Layer* layer1, Layer* layer2){
+    int index1 = layers_.indexOf(layer1);
+    int index2 = layers_.indexOf(layer2);
+    layers_[index1] = layer2;
+    layers_[index2] = layer1;
+}
+
+void Canvas::onLayerChange(int currentRow){
+    qDebug() << "ROW" << currentRow;
+    currentLayer_ = layers_[currentRow];
+}
+
+Layer* Canvas::currentLayer(){
+    return currentLayer_;
+}
+
+QList<Layer*>& Canvas::layers(){
+    return layers_;
+}
+
+QMap<Layer*, QList<QGraphicsItem*>>& Canvas::layerItems(){
+    return layerItems_;
+}
+
+void Canvas::setCurrentLayer(Layer* layer){
+    currentLayer_ = layer;
 }

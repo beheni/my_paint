@@ -38,15 +38,24 @@ MainWindow::MainWindow(){
     canvas->scene()->setSceneRect(0, 0, canvas->width(), canvas->height());
     canvas->setObjectName("canvas");
 
+    Layer* currentLayer = new Layer();
+    canvas->layers().push_back(currentLayer);
+    canvas->layerItems()[currentLayer] = QList<QGraphicsItem*>();
+    canvas->setCurrentLayer(currentLayer);
+    canvas->scene()->addItem(currentLayer);
 
     setCentralWidget(canvas);
     centralWidget()->setSizePolicy(QSizePolicy::Ignored, QSizePolicy::Ignored);
     centralWidget()->setContentsMargins(0,0,0,0);
     centralWidget()->show();
 
-    connect(canvas, &Canvas::objectAdded, layerBar->layerWidget(), &LayerWidget::itemAdded);
-
     connect(layerBar->colorPicker(), &QColorDialog::currentColorChanged, canvas, &Canvas::onColorChange);
+    connect(layerBar->addLayer(), &QPushButton::pressed, canvas, &Canvas::onLayerAdd);
+    connect(layerBar->addLayer(), &QPushButton::pressed, layerBar->layerWidget(), &LayerWidget::onLayerAdd);
+
+    connect(layerBar->removeLayer(), &QPushButton::pressed, layerBar->layerWidget(), &LayerWidget::onLayerRemove);
+    connect(layerBar->layerWidget(), &LayerWidget::layerRemove, canvas, &Canvas::onLayerRemove);
+    connect(layerBar->layerWidget(), &QListWidget::currentRowChanged, canvas, &Canvas::onLayerChange);
 
 }
 

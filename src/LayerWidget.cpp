@@ -14,11 +14,14 @@ LayerWidget::LayerWidget(QWidget *parent): QListWidget(parent){
     setDefaultDropAction(Qt::MoveAction);
     iconSize = QSize(50, 50);
     setIconSize(iconSize);
+    LayerWidgetItem* layerItem = new LayerWidgetItem(this);
+    layerItem->setText(layerItem->getName());
+    addItem(layerItem);
+    setCurrentRow(0);
 
 }
 
 void LayerWidget::itemAdded(QGraphicsItem* item){
-    qDebug() << item->boundingRect().size().toSize();
     QPixmap pixmap(item->boundingRect().size().toSize());
     pixmap.fill(Qt::transparent);
 
@@ -33,7 +36,6 @@ void LayerWidget::itemAdded(QGraphicsItem* item){
     QIcon icon(pixmap);
     layerItem->setIcon(icon);
     layerItem->setText(layerItem->getName());
-    qDebug() << "Item added";
     addItem(layerItem);
 }
 
@@ -56,4 +58,25 @@ QString LayerWidgetItem::getName(){
 LayerWidgetItem::LayerWidgetItem(QListWidget* parent): QListWidgetItem(parent){
     item = nullptr;
     name = "Layer";
+}
+
+
+void LayerWidget::onLayerAdd(){
+    LayerWidgetItem* layerItem = new LayerWidgetItem(this);
+    layerItem->setText(layerItem->getName());
+    addItem(layerItem);
+    setCurrentRow(0);
+}
+
+void LayerWidget::onLayerRemove(){
+    auto selected = currentItem();
+    if (selected){
+        emit layerRemove(row(selected));
+        delete selected;
+    }
+}
+
+void LayerWidget::onLayerSwap(){
+    auto selected = currentItem();
+
 }
