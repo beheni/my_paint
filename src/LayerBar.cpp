@@ -61,7 +61,6 @@ QColorDialog* LayerBar::colorPicker(){
     return colorPicker_;
 }
 
-<<<<<<< HEAD
 QPushButton* LayerBar::addLayer(){
     return addLayer_;
 }
@@ -76,8 +75,7 @@ QPushButton* LayerBar::upLayer(){
 
 QPushButton* LayerBar::downLayer(){
     return downLayer_;
-=======
+}
 QSlider* LayerBar::thicknessSlider() {
     return thicknessSlider_;
->>>>>>> refs/remotes/origin/main
 }

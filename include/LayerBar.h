@@ -25,15 +25,11 @@ public:
     ~LayerBar() override = default;
     LayerWidget* layerWidget();
     QColorDialog* colorPicker();
-<<<<<<< HEAD
     QPushButton* addLayer();
     QPushButton* removeLayer();
     QPushButton* upLayer();
     QPushButton* downLayer();
-=======
     QSlider* thicknessSlider();
-
->>>>>>> refs/remotes/origin/main
 };
 
 #endif // LAYERBAR_H
