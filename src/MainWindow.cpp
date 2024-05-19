@@ -23,6 +23,7 @@ MainWindow::MainWindow(){
     connect(menu->openAction(), &QAction::triggered, this, &MainWindow::openEvent);
     connect(menu->saveAction(), &QAction::triggered, this, &MainWindow::saveEvent);
     connect(menu->newAction(), &QAction::triggered, this, &MainWindow::newEvent);
+    connect(menu->helpAction(), &QAction::triggered, this, &MainWindow::helpEvent);
 
 
     toolBar = new ToolBar(this);
@@ -109,4 +110,16 @@ void MainWindow::exitEvent(){
     QMessageBox::StandardButton reply = QMessageBox::question(this, "Exit", "Are you sure you want to exit?", QMessageBox::Yes | QMessageBox::No);
     if (reply == QMessageBox::Yes)
         QMainWindow::close();
+}
+
+void MainWindow::helpEvent() {
+    QMessageBox::information(this, "Help", "This is a simple paint application. \n"
+                                           "You can draw on the canvas with the selected tool. \n"
+                                           "You can change the color and thickness of the tool. \n"
+                                           "You can add and remove layers. \n"
+                                           "You can save and open files in SVG format. \n"
+                                           "You can exit the application. \n"
+                                           "Enjoy drawing!\n"
+                                            "For more info visit beheni\\my_paint at Github");
+
 }

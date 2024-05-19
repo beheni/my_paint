@@ -26,6 +26,7 @@ public:
     QAction *saveAction();
     QAction *newAction();
     QAction *exitAction();
+    QAction *helpAction();
 };
 
 class Menu : public QMenu{

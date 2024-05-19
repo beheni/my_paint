@@ -25,6 +25,7 @@ public slots:
     void saveEvent();
     void newEvent();
     void exitEvent();
+    void helpEvent();
 
 public:
     explicit MainWindow();
