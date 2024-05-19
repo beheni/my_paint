@@ -80,6 +80,17 @@ protected:
     QGraphicsItem* createItem() override;
 };
 
+class LineTool: public Tool{
+    Q_OBJECT
+    QLineF line;
+protected:
+    void mousePress(QMouseEvent *event, QGraphicsView* drawer) override;
+    void mouseMove(QMouseEvent *event, QGraphicsView* drawer) override;
+    void mouseRelease(QMouseEvent *event, QGraphicsView* drawer) override;
+    void painter(QPaintEvent *event, QGraphicsView* drawer) override;
+    QGraphicsItem* createItem() override;
+};
+
 
 //undo
 //redo
