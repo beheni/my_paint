@@ -21,13 +21,14 @@ LayerBar::LayerBar(QWidget *parent): QToolBar(parent){
     thicknessSlider_->setRange(1, 10);
     thicknessSlider_->setOrientation(Qt::Horizontal);
     thicknessSlider_->setSliderPosition(2);
+    thicknessSlider_->setSingleStep(1);
 
     QGroupBox* sliderGroup = new QGroupBox("Tool Thickness", this);
     QHBoxLayout* layoutSlider = new QHBoxLayout(sliderGroup);
     layoutSlider->addWidget(thicknessSlider_);
-    // thicknessSlider_->setTickPosition(QSlider::TicksAbove);
-    // thicknessSlider_->setTickInterval(10);
-    // thicknessSlider_->setSingleStep(1);
+    thicknessSlider_->setTickPosition(QSlider::TicksBothSides);
+    thicknessSlider_->setTickInterval(1);
+
 
     QGroupBox* layerGroup = new QGroupBox("Layers", this);
     QHBoxLayout* layout = new QHBoxLayout(layerGroup);
