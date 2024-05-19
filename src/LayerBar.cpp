@@ -18,9 +18,19 @@ LayerBar::LayerBar(QWidget *parent): QToolBar(parent){
 
     thicknessSlider_ = new QSlider();
     thicknessSlider_->setFocusPolicy(Qt::StrongFocus);
+    thicknessSlider_->setRange(1, 10);
+    thicknessSlider_->setOrientation(Qt::Horizontal);
+    thicknessSlider_->setSliderPosition(2);
 
-    QGroupBox* group = new QGroupBox("Layers", this);
-    QHBoxLayout* layout = new QHBoxLayout(group);
+    QGroupBox* sliderGroup = new QGroupBox("Tool Thickness", this);
+    QHBoxLayout* layoutSlider = new QHBoxLayout(sliderGroup);
+    layoutSlider->addWidget(thicknessSlider_);
+    // thicknessSlider_->setTickPosition(QSlider::TicksAbove);
+    // thicknessSlider_->setTickInterval(10);
+    // thicknessSlider_->setSingleStep(1);
+
+    QGroupBox* layerGroup = new QGroupBox("Layers", this);
+    QHBoxLayout* layout = new QHBoxLayout(layerGroup);
 
     QPushButton* addLayer = new QPushButton("Add Layer", this);
     QPushButton* removeLayer = new QPushButton("Remove Layer", this);
@@ -31,13 +41,14 @@ LayerBar::LayerBar(QWidget *parent): QToolBar(parent){
     layout->addWidget(removeLayer);
     layout->addWidget(upLayer);
     layout->addWidget(downLayer);
-    group->setLayout(layout);
+    layerGroup->setLayout(layout);
 
     layerWidget_ = new LayerWidget(this);
 
     addWidget(colorPicker_);
-    addWidget(thicknessSlider_);
-    addWidget(group);
+    addWidget(sliderGroup);
+    // addWidget(thicknessSlider_);
+    addWidget(layerGroup);
     addWidget(layerWidget_);
 
 }
