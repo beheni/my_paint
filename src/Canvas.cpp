@@ -1,5 +1,6 @@
 #include "Canvas.h"
 #include <QGraphicsPathItem>
+#include <QDebug>
 #include <QStyleOptionGraphicsItem>
 
 Canvas::Canvas(QWidget* parent): QGraphicsView(parent){
@@ -56,3 +57,8 @@ void Canvas::onToolChange(Tool* tool) {
 
 }
 
+void Canvas::onColorChange(const QColor& color) {
+    qDebug() << color.name();
+    lastSelectedColor = color;
+    tool_->setToolColor(lastSelectedColor);
+}
