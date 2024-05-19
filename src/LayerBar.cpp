@@ -13,8 +13,8 @@ LayerBar::LayerBar(QWidget *parent): QToolBar(parent){
     setAllowedAreas(Qt::LeftToolBarArea | Qt::RightToolBarArea);
     setOrientation(Qt::Vertical);
 
-    QColorDialog* color = new QColorDialog(this);
-    color->setOption(QColorDialog::NoButtons);
+    colorPicker_ = new QColorDialog(this);
+    colorPicker_->setOption(QColorDialog::NoButtons);
 
     QGroupBox* group = new QGroupBox("Layers", this);
     QHBoxLayout* layout = new QHBoxLayout(group);
@@ -32,7 +32,7 @@ LayerBar::LayerBar(QWidget *parent): QToolBar(parent){
 
     layerWidget_ = new LayerWidget(this);
 
-    addWidget(color);
+    addWidget(colorPicker_);
     addWidget(group);
     addWidget(layerWidget_);
 
@@ -40,4 +40,8 @@ LayerBar::LayerBar(QWidget *parent): QToolBar(parent){
 
 LayerWidget* LayerBar::layerWidget(){
     return layerWidget_;
+}
+
+QColorDialog* LayerBar::colorPicker(){
+    return colorPicker_;
 }

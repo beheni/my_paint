@@ -9,6 +9,7 @@
 #include "MainWindow.h"
 #include <QObjectList>
 #include <QDebug>
+#include <QColorDialog>
 #include <QMessageBox>
 
 
@@ -44,6 +45,8 @@ MainWindow::MainWindow(){
     centralWidget()->show();
 
     connect(canvas, &Canvas::objectAdded, layerBar->layerWidget(), &LayerWidget::itemAdded);
+
+    connect(layerBar->colorPicker(), &QColorDialog::currentColorChanged, canvas, &Canvas::onColorChange);
 
 }
 

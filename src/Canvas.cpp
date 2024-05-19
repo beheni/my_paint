@@ -56,3 +56,6 @@ void Canvas::onToolChange(Tool* tool) {
 
 }
 
+void Canvas::onColorChange(const QColor& color) {
+    lastSelectedColor = color;
+}

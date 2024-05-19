@@ -6,12 +6,14 @@
 #include <QEvent>
 #include <QMouseEvent>
 #include <QPainterPath>
+#include <QColor>
 #include "Tool.h"
 
 class Canvas: public QGraphicsView{
     Q_OBJECT
     bool drawing;
     Tool* tool_;
+    QColor lastSelectedColor;
     QPainterPath path;
 
 public:
@@ -25,6 +27,7 @@ public:
     void paintEvent(QPaintEvent *event) override;    
 public slots:
     void onToolChange(Tool* tool);
+    void onColorChange(const QColor& color);
 signals:
     void objectAdded(QGraphicsItem* item);
 };
