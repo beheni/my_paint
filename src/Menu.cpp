@@ -9,18 +9,45 @@
 
 MenuBar::MenuBar(QWidget *parent) : QMenuBar(parent) {
     Menu *file = new Menu("&File");
-    file->addAction("New");
-    QAction* openAction = file->addAction("Open");
+    newAction_ = file->addAction("New");
+    newAction_->setShortcut(QKeySequence::New);
 
-    QAction* saveAction = file->addAction("Save");
-    connect(saveAction, &QAction::triggered, this, &MenuBar::onSave);
-    connect(openAction, &QAction::triggered, this, &MenuBar::onOpen);
+    openAction_ = file->addAction("Open");
+    openAction_->setShortcut(QKeySequence::Open);
+
+    saveAction_ = file->addAction("Save");
+    saveAction_->setShortcut(QKeySequence::Save);
 
     file->addSeparator();
     exitAction_ = file->addAction("Exit");
+    exitAction_->setShortcut(QKeySequence::Quit);
+
     Menu *edit = new Menu("&Edit");
+    undoAction_ = edit->addAction("Undo");
+    undoAction_->setShortcut(QKeySequence::Undo);
+
+    redoAction_ = edit->addAction("Redo");
+    redoAction_->setShortcut(QKeySequence::Redo);
+    edit->addSeparator();
+
+    cutAction_ = edit->addAction("Cut");
+    cutAction_->setShortcut(QKeySequence::Cut);
+
+    copyAction_ = edit->addAction("Copy");
+    copyAction_->setShortcut(QKeySequence::Copy);
+
+    pasteAction_ = edit->addAction("Paste");
+    pasteAction_->setShortcut(QKeySequence::Paste);
+
     Menu *view = new Menu("&View");
+    zoomInAction_ = view->addAction("Zoom In");
+    zoomInAction_->setShortcut(QKeySequence::ZoomIn);
+    zoomOutAction_ = view->addAction("Zoom Out");
+    zoomOutAction_->setShortcut(QKeySequence::ZoomOut);
+    zoomResetAction_ = view->addAction("Zoom Reset");
+
     Menu *help = new Menu("&Help");
+    helpAction_ = help->addAction("About");
 
     addMenu(file);
     addMenu(edit);
@@ -28,43 +55,23 @@ MenuBar::MenuBar(QWidget *parent) : QMenuBar(parent) {
     addMenu(help);
 
 }
-
-void MenuBar::setCanvas(Canvas *canvas_) {
-    canvas = canvas_;
-}
-
-
 Menu::Menu(const QString &title, QWidget *parent) : QMenu(title, parent) {}
 
-void MenuBar::onSave() {
-    QSvgGenerator generator;
-    QString filename = QFileDialog::getSaveFileName(this, "Save", "canvas.svg", "SVG files (*.svg)");
-    if (filename.isEmpty()) {
-        return;
-    }
-    generator.setFileName(filename);
-    generator.setSize(canvas->size());
-    generator.setViewBox(canvas->scene()->sceneRect()); //size to be changed
-    QPainter painter;
-    painter.begin(&generator);
-    canvas->render(&painter);
-    painter.end();
-    QMessageBox::information(this, "Save", "Canvas saved to canvas.svg");
-}
-
-void MenuBar::onOpen(){
-    QString filename = QFileDialog::getOpenFileName(this, "Open", "");
-    if (filename.isEmpty()) {
-        return;
-    }
-    canvas->scene()->clear();
-    auto* pixmap = new QGraphicsPixmapItem(QPixmap(filename));
-    canvas->scene()->addItem(pixmap);
-    canvas->scene()->setSceneRect(pixmap->boundingRect());
-    QMessageBox::information(this, "Open", "Canvas loaded from " + filename);
-
-}
 
 QAction *MenuBar::exitAction() {
     return exitAction_;
 }
+
+QAction *MenuBar::openAction() {
+    return openAction_;
+}
+
+QAction *MenuBar::saveAction() {
+    return saveAction_;
+}
+
+QAction *MenuBar::newAction() {
+    return newAction_;
+}
+
+

@@ -77,7 +77,8 @@ src/Tool.cpp
 include/LayerBar.h
 src/LayerBar.cpp
 src/LayerWidget.cpp
-include/LayerWidget.h)
+include/LayerWidget.h
+)
 
 
 target_link_libraries(${PROJECT_NAME} Qt6::Widgets Qt6::Svg Qt6::Gui)

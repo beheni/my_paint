@@ -3,6 +3,7 @@
 #include <QMainWindow>
 #include <QPainter>
 #include <QGraphicsScene>
+#include <QUndoStack>
 #include "Canvas.h"
 #include "Menu.h"
 #include "ToolBar.h"
@@ -18,7 +19,11 @@ class MainWindow: public QMainWindow
     // Tool currentTool;
     QGraphicsScene * scene;
     QPainter * currentTool;
-private slots:
+    QUndoStack * undoStack = nullptr;
+public slots:
+    void openEvent();
+    void saveEvent();
+    void newEvent();
     void exitEvent();
 
 public:

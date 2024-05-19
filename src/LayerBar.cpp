@@ -51,6 +51,7 @@ LayerBar::LayerBar(QWidget *parent): QToolBar(parent){
     addWidget(layerGroup);
     addWidget(layerWidget_);
 
+
 }
 
 LayerWidget* LayerBar::layerWidget(){
