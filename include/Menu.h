@@ -7,14 +7,15 @@
 class MenuBar : public QMenuBar {
     Q_OBJECT
     Canvas *canvas;
+    QAction *exitAction_;
 
 public slots:
     void onSave();
-    void onExit();
     void onOpen();
 public:
     explicit MenuBar(QWidget *parent = nullptr);
     void setCanvas(Canvas *canvas);
+    QAction *exitAction();
 };
 
 class Menu : public QMenu{

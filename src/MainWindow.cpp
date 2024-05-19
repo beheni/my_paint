@@ -9,13 +9,14 @@
 #include "MainWindow.h"
 #include <QObjectList>
 #include <QDebug>
+#include <QMessageBox>
 
 
 MainWindow::MainWindow(){
     menu = new MenuBar(this);
     menu->setObjectName("menu");
     setMenuBar(menu);
-
+    connect(menu->exitAction(), &QAction::triggered, this, &MainWindow::exitEvent);
 
     toolBar = new ToolBar(this);
     toolBar->setObjectName("toolbar");
@@ -38,6 +39,12 @@ MainWindow::MainWindow(){
 
 void MainWindow::resizeEvent(QResizeEvent* event){
     QMainWindow::resizeEvent(event);
-    centralWidget()->resize(event->size());
+    QSize newSize = canvas->size();
+    canvas->scene()->setSceneRect(0,0, newSize.width(), newSize.height());
 }
 
+void MainWindow::exitEvent(){
+    QMessageBox::StandardButton reply = QMessageBox::question(this, "Exit", "Are you sure you want to exit?", QMessageBox::Yes | QMessageBox::No);
+    if (reply == QMessageBox::Yes)
+        QMainWindow::close();
+}

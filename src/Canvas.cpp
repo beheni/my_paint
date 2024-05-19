@@ -13,12 +13,12 @@ Canvas::Canvas(QWidget* parent): QGraphicsView(parent){
     show();
 }
 
-void Canvas::resizeEvent(QResizeEvent *event) {
-    QGraphicsView::resizeEvent(event);
-    scene()->setSceneRect(0,0, width(), height());
-    qDebug() << "Scene size: " << scene()->sceneRect() << "View size" << size();
-    fitInView(sceneRect(), Qt::KeepAspectRatioByExpanding);
-}
+// void Canvas::resizeEvent(QResizeEvent *event) {
+//     QGraphicsView::resizeEvent(event);
+//     // scene()->setSceneRect(0,0, width(), height());
+//     // qDebug() << "Scene size: " << scene()->sceneRect() << "View size" << size();
+//     // fitInView(sceneRect(), Qt::KeepAspectRatioByExpanding);
+// }
 
 void Canvas::paintEvent(QPaintEvent *event) {
     QGraphicsView::paintEvent(event);

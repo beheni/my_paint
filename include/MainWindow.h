@@ -6,7 +6,6 @@
 #include "Canvas.h"
 #include "Menu.h"
 #include "ToolBar.h"
-#include "Tool.h"
 
 class MainWindow: public QMainWindow
 {
@@ -17,7 +16,8 @@ class MainWindow: public QMainWindow
     // Tool currentTool;
     QGraphicsScene * scene;
     QPainter * currentTool;
-
+private slots:
+    void exitEvent();
 
 public:
     explicit MainWindow();
