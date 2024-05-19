@@ -50,6 +50,8 @@ LayerBar::LayerBar(QWidget *parent): QToolBar(parent){
     addWidget(sliderGroup);
     addWidget(layerGroup);
     addWidget(layerWidget_);
+    // addWidget(actionStack);
+
 
 }
 

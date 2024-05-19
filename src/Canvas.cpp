@@ -12,7 +12,10 @@ Canvas::Canvas(QWidget* parent): QGraphicsView(parent){
     setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
     drawing = false;
     setMouseTracking(true);
+
+    undoStack = new QUndoStack(this);
     show();
+
 }
 
 void Canvas::paintEvent(QPaintEvent *event) {

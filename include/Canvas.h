@@ -10,6 +10,7 @@
 #include "Tool.h"
 #include "Layer.h"
 #include <QList>
+#include <QUndoStack>
 
 class Canvas: public QGraphicsView{
     Q_OBJECT
@@ -21,6 +22,7 @@ class Canvas: public QGraphicsView{
     Layer* currentLayer_;
     QList<Layer*> layers_;
     QMap<Layer*, QList<QGraphicsItem*>> layerItems_;
+    QUndoStack *undoStack = nullptr;
 
 public:
     Canvas(QWidget *parent = nullptr);

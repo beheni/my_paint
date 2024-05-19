@@ -19,8 +19,24 @@ MenuBar::MenuBar(QWidget *parent) : QMenuBar(parent) {
     file->addSeparator();
     exitAction_ = file->addAction("Exit");
     Menu *edit = new Menu("&Edit");
+    QAction* editAction = edit->addAction("Undo");
+    // connect(editAction, &QAction::triggered, this, &MenuBar::onUndo);
+    QAction* redoAction = edit->addAction("Redo");
+    edit->addSeparator();
+    // connect(redoAction, &QAction::triggered, this, &MenuBar::onRedo);
+    QAction* cutAction = edit->addAction("Cut");
+    // connect(cutAction, &QAction::triggered, this, &MenuBar::onCut);
+    QAction* copyAction = edit->addAction("Copy");
+    // connect(copyAction, &QAction::triggered, this, &MenuBar::onCopy);
+    QAction* pasteAction = edit->addAction("Paste");
+    // connect(pasteAction, &QAction::triggered, this, &MenuBar::onPaste);
+
     Menu *view = new Menu("&View");
+    QAction* zoomInAction = view->addAction("Zoom In");
+    QAction* zoomOutAction = view->addAction("Zoom Out");
+    QAction* zoomResetAction = view->addAction("Zoom Reset");
     Menu *help = new Menu("&Help");
+    QAction* helpAction = help->addAction("About");
 
     addMenu(file);
     addMenu(edit);
