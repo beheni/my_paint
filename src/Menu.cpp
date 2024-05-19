@@ -39,6 +39,9 @@ MenuBar::MenuBar(QWidget *parent) : QMenuBar(parent) {
     pasteAction_ = edit->addAction("Paste");
     pasteAction_->setShortcut(QKeySequence::Paste);
 
+    deleteAction_ = edit->addAction("Delete");
+    deleteAction_->setShortcut(QKeySequence::Delete);
+
     view = new Menu("&View");
     zoomInAction_ = view->addAction("Zoom In");
     zoomInAction_->setShortcut(QKeySequence::ZoomIn);

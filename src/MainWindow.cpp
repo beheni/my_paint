@@ -151,10 +151,24 @@ void MainWindow::createUndoView()
     QDockWidget *undoDockWidget = new QDockWidget;
     undoDockWidget->setWindowTitle(tr("Command List"));
     undoDockWidget->setWidget(new QUndoView(undoStack));
+    undoDockWidget->setAllowedAreas(Qt::RightDockWidgetArea);
+    undoDockWidget->setFeatures(QDockWidget::NoDockWidgetFeatures);
     addDockWidget(Qt::RightDockWidgetArea, undoDockWidget);
 }
 
 void MainWindow::onObjectAdded(QGraphicsItem *item) {
     qDebug() << "Object added";
-    undoStack->push(new QUndoCommand(QString("Object added on canvas")));
+    // undoStack->push(new QUndoCommand(QString("Object added on canvas"))); //basic vertion just with text
+    undoStack->push(new AddCommand(canvas, item));
 }
+
+AddCommand::AddCommand(Canvas *canvas, QGraphicsItem *item, QUndoCommand *parent): QUndoCommand(parent), item(item), canvas(canvas) {}
+
+void AddCommand::undo() {
+    canvas->scene()->removeItem(item);
+}
+
+void AddCommand::redo() {
+    canvas->scene()->addItem(item);
+}
+

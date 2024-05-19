@@ -17,6 +17,7 @@ class MenuBar : public QMenuBar {
     QAction *cutAction_;
     QAction *copyAction_;
     QAction *pasteAction_;
+    QAction *deleteAction_;
     QAction *zoomInAction_;
     QAction *zoomOutAction_;
     QAction *zoomResetAction_;

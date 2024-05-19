@@ -5,6 +5,7 @@
 #include <QGraphicsScene>
 #include <QUndoStack>
 #include <QUndoView>
+#include <QUndoCommand>
 #include "Canvas.h"
 #include "Menu.h"
 #include "ToolBar.h"
@@ -45,6 +46,20 @@ public:
     void createUndoView();
     // ~MainWindow() override = default;
 
+};
+
+
+class AddCommand: public QUndoCommand
+{
+public:
+    QGraphicsItem* item;
+    Canvas* canvas;
+    AddCommand(Canvas* canvas, QGraphicsItem* item,
+               QUndoCommand *parent = nullptr);
+    ~AddCommand() = default;
+
+    void undo() override;
+    void redo() override;
 };
 
 #endif //MY_PAINT_MAINWINDOW_H
