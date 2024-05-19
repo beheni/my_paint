@@ -1,6 +1,5 @@
 #include "LayerBar.h"
 #include <QColorDialog>
-#include <QButtonGroup>
 #include <QGroupBox>
 #include <QPushButton>
 #include <QHBoxLayout>
@@ -34,22 +33,21 @@ LayerBar::LayerBar(QWidget *parent): QToolBar(parent){
     QGroupBox* layerGroup = new QGroupBox("Layers", this);
     QHBoxLayout* layout = new QHBoxLayout(layerGroup);
 
-    QPushButton* addLayer = new QPushButton("Add Layer", this);
-    QPushButton* removeLayer = new QPushButton("Remove Layer", this);
-    QPushButton* upLayer = new QPushButton("Up Layer", this);
-    QPushButton* downLayer = new QPushButton("Down Layer", this);
+    addLayer_ = new QPushButton("Add Layer", this);
+    removeLayer_ = new QPushButton("Remove Layer", this);
+    upLayer_ = new QPushButton("Up Layer", this);
+    downLayer_ = new QPushButton("Down Layer", this);
 
-    layout->addWidget(addLayer);
-    layout->addWidget(removeLayer);
-    layout->addWidget(upLayer);
-    layout->addWidget(downLayer);
+    layout->addWidget(addLayer_);
+    layout->addWidget(removeLayer_);
+    layout->addWidget(upLayer_);
+    layout->addWidget(downLayer_);
     layerGroup->setLayout(layout);
 
     layerWidget_ = new LayerWidget(this);
 
     addWidget(colorPicker_);
     addWidget(sliderGroup);
-    // addWidget(thicknessSlider_);
     addWidget(layerGroup);
     addWidget(layerWidget_);
 
@@ -63,6 +61,21 @@ QColorDialog* LayerBar::colorPicker(){
     return colorPicker_;
 }
 
+QPushButton* LayerBar::addLayer(){
+    return addLayer_;
+}
+
+QPushButton* LayerBar::removeLayer(){
+    return removeLayer_;
+}
+
+QPushButton* LayerBar::upLayer(){
+    return upLayer_;
+}
+
+QPushButton* LayerBar::downLayer(){
+    return downLayer_;
+}
 QSlider* LayerBar::thicknessSlider() {
     return thicknessSlider_;
 }

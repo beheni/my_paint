@@ -8,6 +8,8 @@
 #include <QPainterPath>
 #include <QColor>
 #include "Tool.h"
+#include "Layer.h"
+#include <QList>
 
 class Canvas: public QGraphicsView{
     Q_OBJECT
@@ -16,19 +18,30 @@ class Canvas: public QGraphicsView{
     QColor lastSelectedColor = QColor(0, 0, 0);
     int lastSelectedThickness = 1;
     QPainterPath path;
+    Layer* currentLayer_;
+    QList<Layer*> layers_;
+    QMap<Layer*, QList<QGraphicsItem*>> layerItems_;
 
 public:
     Canvas(QWidget *parent = nullptr);
     ~Canvas() override = default;
 
-    // void resizeEvent(QResizeEvent *event) override;
     void mousePressEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
     void mouseReleaseEvent(QMouseEvent *event) override;
-    void paintEvent(QPaintEvent *event) override;    
+    void paintEvent(QPaintEvent *event) override;
+    Layer* currentLayer();
+    QList<Layer*>& layers();
+    QMap<Layer*, QList<QGraphicsItem*>>& layerItems();
+    void setCurrentLayer(Layer* layer);
+
 public slots:
     void onToolChange(Tool* tool);
     void onColorChange(const QColor& color);
+    void onLayerChange(int index);
+    void onLayerAdd();
+    void onLayerRemove(size_t index);
+    void onLayerSwap(Layer* layer1, Layer* layer2);
     void onThicknessChange(int thickness);
 signals:
     void objectAdded(QGraphicsItem* item);
