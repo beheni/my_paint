@@ -54,11 +54,14 @@ void Canvas::mouseReleaseEvent(QMouseEvent *event) {
 
 void Canvas::onToolChange(Tool* tool) {
     tool_ = tool;
+    tool_->setToolColor(lastSelectedColor);
 
 }
 
 void Canvas::onColorChange(const QColor& color) {
     qDebug() << color.name();
     lastSelectedColor = color;
-    tool_->setToolColor(lastSelectedColor);
+    if (tool_) {
+        tool_->setToolColor(lastSelectedColor);
+    }
 }

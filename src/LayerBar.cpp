@@ -16,6 +16,9 @@ LayerBar::LayerBar(QWidget *parent): QToolBar(parent){
     colorPicker_ = new QColorDialog(this);
     colorPicker_->setOption(QColorDialog::NoButtons);
 
+    thicknessSlider_ = new QSlider();
+    thicknessSlider_->setFocusPolicy(Qt::StrongFocus);
+
     QGroupBox* group = new QGroupBox("Layers", this);
     QHBoxLayout* layout = new QHBoxLayout(group);
 
@@ -33,6 +36,7 @@ LayerBar::LayerBar(QWidget *parent): QToolBar(parent){
     layerWidget_ = new LayerWidget(this);
 
     addWidget(colorPicker_);
+    addWidget(thicknessSlider_);
     addWidget(group);
     addWidget(layerWidget_);
 
