@@ -13,17 +13,35 @@
 #include <QSvgGenerator>
 #include <QColorDialog>
 #include <QMessageBox>
+#include <QUndoView>
 
 
 MainWindow::MainWindow(){
     menu = new MenuBar(this);
     menu->setObjectName("menu");
     setMenuBar(menu);
+    Menu* editMenu = menu->getEditMenu();
+    editMenu->addSeparator();
+
+    undoStack = new QUndoStack(this);
+
+    QAction* undoAction = undoStack->createUndoAction(this, tr("Undo"));
+    undoAction->setShortcut(QKeySequence::Undo);
+    editMenu->addAction(undoAction);
+
+    QAction* redoAction = undoStack->createRedoAction(this, tr("Redo"));
+    redoAction->setShortcut(QKeySequence::Redo);
+    editMenu->addAction(redoAction);
+
+
     connect(menu->exitAction(), &QAction::triggered, this, &MainWindow::exitEvent);
     connect(menu->openAction(), &QAction::triggered, this, &MainWindow::openEvent);
     connect(menu->saveAction(), &QAction::triggered, this, &MainWindow::saveEvent);
     connect(menu->newAction(), &QAction::triggered, this, &MainWindow::newEvent);
     connect(menu->helpAction(), &QAction::triggered, this, &MainWindow::helpEvent);
+
+
+    createUndoView();
 
 
     toolBar = new ToolBar(this);
@@ -67,7 +85,7 @@ MainWindow::MainWindow(){
     connect(layerBar->downLayer(), &QPushButton::pressed, layerBar->layerWidget(), &LayerWidget::onLayerDown);
 
     connect(layerBar->thicknessSlider(), &QSlider::valueChanged, canvas, &Canvas::onThicknessChange);
-
+    connect(canvas, &Canvas::objectAdded, this, &MainWindow::onObjectAdded);
 }
 
 void MainWindow::resizeEvent(QResizeEvent* event){
@@ -125,4 +143,18 @@ void MainWindow::helpEvent() {
                                            "Enjoy drawing!\n"
                                             "For more info visit beheni\\my_paint at Github");
 
+}
+
+void MainWindow::createUndoView()
+{
+    //треба додати в нормальну частину
+    QDockWidget *undoDockWidget = new QDockWidget;
+    undoDockWidget->setWindowTitle(tr("Command List"));
+    undoDockWidget->setWidget(new QUndoView(undoStack));
+    addDockWidget(Qt::RightDockWidgetArea, undoDockWidget);
+}
+
+void MainWindow::onObjectAdded(QGraphicsItem *item) {
+    qDebug() << "Object added";
+    undoStack->push(new QUndoCommand(QString("Object added on canvas")));
 }

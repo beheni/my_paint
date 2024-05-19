@@ -48,5 +48,11 @@ public slots:
     void onThicknessChange(int thickness);
 signals:
     void objectAdded(QGraphicsItem* item);
+    void objectMoved(QGraphicsItem* item);
+    void objectRemoved(QGraphicsItem* item);
+    void layerAdded(Layer* layer);
+    void layerRemoved(Layer* layer);
+    void layerSwapped(size_t index1, size_t index2);
+
 };
 #endif
