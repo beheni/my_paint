@@ -26,7 +26,7 @@ void ToolBar::setup(){
     rect->setIcon(QIcon(":/rect.png"));
 
     Button *triangle = new Button(this);
-    triangle->setTool(new DrawerTool());
+    triangle->setTool(new TriangleTool());
     connect(triangle, &Button::clicked, canvas,  [this, triangle](){canvas->onToolChange(triangle->tool());});
     triangle->setIcon(QIcon(":/triangle.png"));
 
@@ -36,7 +36,7 @@ void ToolBar::setup(){
     ellipse->setIcon(QIcon(":/ellipse.png"));
 
     Button *poly = new Button(this);
-    poly->setTool(new DrawerTool());
+    poly->setTool(new PolyTool());
     connect(poly, &Button::clicked, canvas,  [this, poly](){canvas->onToolChange(poly->tool());});
     poly->setIcon(QIcon(":/poly.png"));
 
@@ -67,6 +67,5 @@ ToolBar::ToolBar(QWidget *parent) : QToolBar(parent) {
     setOrientation(Qt::Vertical);
     setMovable(false);
     setFloatable(false);
-
 
 }

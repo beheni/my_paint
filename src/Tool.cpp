@@ -225,3 +225,94 @@ QGraphicsItem* LineTool::createItem() {
 
 
 
+// void RectTool::mousePress(QMouseEvent *event, QGraphicsView* drawer) {
+//     rect.setTopLeft(event->pos());
+//     rect.setBottomRight(event->pos());
+// }
+
+// void RectTool::mouseMove(QMouseEvent *event, QGraphicsView* drawer) {
+//     rect.setBottomRight(event->pos());
+// }
+
+// void RectTool::mouseRelease(QMouseEvent *event, QGraphicsView* drawer) {
+//     rect.setBottomRight(event->pos());
+// }
+
+// void RectTool::painter(QPaintEvent *event, QGraphicsView* drawer) {
+//     QPainter painter(drawer->viewport());
+//     painter.setRenderHint(QPainter::Antialiasing);
+//     painter.setPen(QPen(color_, thickness_, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+//     painter.setBrush(Qt::NoBrush);
+//     painter.drawRect(rect);
+// }
+
+// QGraphicsItem* RectTool::createItem() {
+//     QGraphicsRectItem *item = new QGraphicsRectItem(rect);
+//     item->setPen(QPen(color_, thickness_, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+//     return item;
+void TriangleTool::mousePress(QMouseEvent *event, QGraphicsView* drawer) {
+    boundingRect.setTopLeft(event->pos());
+    boundingRect.setBottomRight(event->pos());
+}
+
+void TriangleTool::mouseMove(QMouseEvent *event, QGraphicsView* drawer) {
+    boundingRect.setBottomRight(event->pos());
+}
+
+void TriangleTool::mouseRelease(QMouseEvent *event, QGraphicsView* drawer) {
+    boundingRect.setBottomRight(event->pos());
+}
+
+void TriangleTool::painter(QPaintEvent *event, QGraphicsView* drawer) {
+    QPainter painter(drawer->viewport());
+    painter.setRenderHint(QPainter::Antialiasing);
+    painter.setPen(QPen(color_, thickness_, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+    painter.setBrush(Qt::NoBrush);
+    painter.drawPolygon(QPolygonF() << (boundingRect.topLeft() + boundingRect.topRight())/2 <<boundingRect.bottomRight() << boundingRect.bottomLeft());
+}
+
+QGraphicsItem* TriangleTool::createItem() {
+    QGraphicsPolygonItem *item = new QGraphicsPolygonItem(QPolygonF() << (boundingRect.topLeft() + boundingRect.topRight())/2 <<boundingRect.bottomRight() << boundingRect.bottomLeft());
+    item->setPen(QPen(color_, thickness_, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+    return item;
+}
+
+void PolyTool::mousePress(QMouseEvent *event, QGraphicsView* drawer) {
+    if (event->button()==Qt::RightButton) {
+        finished = true;
+    }
+    poly << event->pos();
+}
+
+void PolyTool::mouseMove(QMouseEvent *event, QGraphicsView* drawer) {
+    return;
+}
+
+void PolyTool::mouseRelease(QMouseEvent *event, QGraphicsView* drawer) {
+    return;
+}
+
+void PolyTool::painter(QPaintEvent *event, QGraphicsView* drawer) {
+    if (finished) {
+        QPainter painter(drawer->viewport());
+        painter.setRenderHint(QPainter::Antialiasing);
+        painter.setPen(QPen(color_, thickness_, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+        painter.setBrush(Qt::NoBrush);
+        painter.drawPolygon(poly);
+        poly.clear();
+    }
+
+}
+
+QGraphicsItem* PolyTool::createItem() {
+    if (finished) {
+        QGraphicsPolygonItem *item = new QGraphicsPolygonItem(poly);
+        item->setPen(QPen(color_, thickness_, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+        return item;
+    }
+    return nullptr;
+}
+
+
+
+

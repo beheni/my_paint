@@ -91,6 +91,31 @@ protected:
     QGraphicsItem* createItem() override;
 };
 
+class TriangleTool: public Tool{
+    Q_OBJECT
+    QRectF boundingRect;
+protected:
+    void mousePress(QMouseEvent *event, QGraphicsView* drawer) override;
+    void mouseMove(QMouseEvent *event, QGraphicsView* drawer) override;
+    void mouseRelease(QMouseEvent *event, QGraphicsView* drawer) override;
+    void painter(QPaintEvent *event, QGraphicsView* drawer) override;
+    QGraphicsItem* createItem() override;
+};
+
+class PolyTool: public Tool{
+    Q_OBJECT
+    QPolygonF poly;
+    bool finished = false;
+    QPointF firstPoint;
+    QPointF lastPoint;
+protected:
+    void mousePress(QMouseEvent *event, QGraphicsView* drawer) override;
+    void mouseMove(QMouseEvent *event, QGraphicsView* drawer) override;
+    void mouseRelease(QMouseEvent *event, QGraphicsView* drawer) override;
+    void painter(QPaintEvent *event, QGraphicsView* drawer) override;
+    QGraphicsItem* createItem() override;
+};
+
 
 //undo
 //redo
