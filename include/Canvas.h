@@ -14,6 +14,7 @@ class Canvas: public QGraphicsView{
     bool drawing;
     Tool* tool_;
     QColor lastSelectedColor = QColor(0, 0, 0);
+    int lastSelectedThickness = 1;
     QPainterPath path;
 
 public:

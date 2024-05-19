@@ -15,6 +15,7 @@ LayerBar::LayerBar(QWidget *parent): QToolBar(parent){
 
     colorPicker_ = new QColorDialog(this);
     colorPicker_->setOption(QColorDialog::NoButtons);
+    colorPicker_->setCurrentColor(QColor(0, 0, 0));
 
     thicknessSlider_ = new QSlider();
     thicknessSlider_->setFocusPolicy(Qt::StrongFocus);

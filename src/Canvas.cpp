@@ -55,7 +55,7 @@ void Canvas::mouseReleaseEvent(QMouseEvent *event) {
 void Canvas::onToolChange(Tool* tool) {
     tool_ = tool;
     tool_->setToolColor(lastSelectedColor);
-    tool_->setToolThickness(2);
+    tool_->setToolThickness(lastSelectedThickness);
 
 }
 
@@ -69,6 +69,7 @@ void Canvas::onColorChange(const QColor& color) {
 
 
 void Canvas::onThicknessChange(int thickness) {
+    lastSelectedThickness = thickness;
     if (tool_) {
         tool_->setToolThickness(thickness);
     }
