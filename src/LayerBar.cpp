@@ -30,11 +30,11 @@ LayerBar::LayerBar(QWidget *parent): QToolBar(parent){
     layout->addWidget(downLayer);
     group->setLayout(layout);
 
-    LayerWidget* layerWidget = new LayerWidget(this);
+    layerWidget_ = new LayerWidget(this);
 
     addWidget(color);
     addWidget(group);
-    addWidget(layerWidget);
+    addWidget(layerWidget_);
 
 }
 

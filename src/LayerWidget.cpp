@@ -14,6 +14,7 @@ void LayerWidget::itemAdded(QGraphicsItem* item){
     LayerWidgetItem* layerItem = new LayerWidgetItem(this);
     layerItem->setItem(item);
     layerItem->setText(layerItem->getName());
+    qDebug() << "Item added";
     addItem(layerItem);
 }
 
