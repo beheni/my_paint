@@ -21,6 +21,14 @@ void Tool::mouseReleaseCallback(QMouseEvent *event, QGraphicsView* drawer) {
     mouseRelease(event, drawer);
 }
 
+void Tool::keyPressCallback(QKeyEvent *event) {
+    keyPressEvent(event);
+}
+
+void Tool::keyPressEvent(QKeyEvent *event) {
+    return;
+}
+
 void Tool::paint(QPaintEvent *event, QGraphicsView* drawer) {
     QWidget::paintEvent(event);
     painter(event, drawer);
@@ -110,7 +118,21 @@ QGraphicsItem* SelectionTool::createItem() {
     // return item;
 }
 
+void SelectionTool::keyPressEvent(QKeyEvent *event) {
+    // if (event->key() == Qt::Key_Delete) {
+    //     for (auto item: selectedItems) {
+    //         item->scene()->removeItem(item);
+    //     }
+    //     selectedItems.clear();
+    // }
+}
 
+void DrawerTool::keyPressEvent(QKeyEvent *event) {
+    /*qDebug() << "Key pressed";
+    if (event->key() == Qt::Key_Backspace) {
+        path = QPainterPath();
+    }*/
+}
 
 void DrawerTool::mousePress(QMouseEvent *event, QGraphicsView* drawer) {
     path.moveTo(event->pos());
@@ -164,6 +186,20 @@ QGraphicsItem* RectTool::createItem() {
     QGraphicsRectItem *item = new QGraphicsRectItem(rect);
     item->setPen(QPen(color_, thickness_, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
     return item;
+}
+
+void RectTool::keyPressEvent(QKeyEvent *event) {
+    /*qDebug() << "Key pressed";
+    if (event->key() == Qt::Key_Backspace) {
+        rect = QRectF();
+    }*/
+}
+
+void EllipseTool::keyPressEvent(QKeyEvent *event) {
+    /*qDebug() << "Key pressed";
+    if (event->key() == Qt::Key_Backspace) {
+        rect = QRectF();
+    }*/
 }
 
 void EllipseTool::mousePress(QMouseEvent *event, QGraphicsView* drawer) {
@@ -222,33 +258,20 @@ QGraphicsItem* LineTool::createItem() {
     return item;
 }
 
+void LineTool::keyPressEvent(QKeyEvent *event) {
+    /*qDebug() << "Key pressed";
+    if (event->key() == Qt::Key_Backspace) {
+        rect = QRectF();
+    }*/
+}
 
+void TriangleTool::keyPressEvent(QKeyEvent *event) {
+    /*qDebug() << "Key pressed";
+    if (event->key() == Qt::Key_Backspace) {
+        rect = QRectF();
+    }*/
+}
 
-// void RectTool::mousePress(QMouseEvent *event, QGraphicsView* drawer) {
-//     rect.setTopLeft(event->pos());
-//     rect.setBottomRight(event->pos());
-// }
-
-// void RectTool::mouseMove(QMouseEvent *event, QGraphicsView* drawer) {
-//     rect.setBottomRight(event->pos());
-// }
-
-// void RectTool::mouseRelease(QMouseEvent *event, QGraphicsView* drawer) {
-//     rect.setBottomRight(event->pos());
-// }
-
-// void RectTool::painter(QPaintEvent *event, QGraphicsView* drawer) {
-//     QPainter painter(drawer->viewport());
-//     painter.setRenderHint(QPainter::Antialiasing);
-//     painter.setPen(QPen(color_, thickness_, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
-//     painter.setBrush(Qt::NoBrush);
-//     painter.drawRect(rect);
-// }
-
-// QGraphicsItem* RectTool::createItem() {
-//     QGraphicsRectItem *item = new QGraphicsRectItem(rect);
-//     item->setPen(QPen(color_, thickness_, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
-//     return item;
 void TriangleTool::mousePress(QMouseEvent *event, QGraphicsView* drawer) {
     boundingRect.setTopLeft(event->pos());
     boundingRect.setBottomRight(event->pos());
@@ -311,6 +334,64 @@ QGraphicsItem* PolyTool::createItem() {
     }
     return nullptr;
 }
+
+void PolyTool::keyPressEvent(QKeyEvent *event) {
+    // if (event->key() == Qt::Key_Backspace) {
+    //     poly.clear();
+    //     finished = false;
+    // }
+}
+
+void TextTool::mousePress(QMouseEvent *event, QGraphicsView* drawer) {
+    text = "";
+    textCursor = event->pos();
+}
+
+void TextTool::keyPressEvent(QKeyEvent *event) {
+    qDebug() << "Key pressed";
+    if (event->key() == Qt::Key_Backspace) {
+        text = text.left(text.size()-1);
+    }
+    else {
+        text += event->text();
+        repaint();
+    }
+    qDebug() << text;
+    repaint();
+}
+
+void TextTool::mouseMove(QMouseEvent *event, QGraphicsView* drawer) {
+    return;
+}
+
+void TextTool::mouseRelease(QMouseEvent *event, QGraphicsView* drawer) {
+    return;
+}
+
+void TextTool::painter(QPaintEvent *event, QGraphicsView* drawer) {
+    QPainter painter(drawer->viewport());
+    painter.setRenderHint(QPainter::Antialiasing);
+    painter.setPen(QPen(color_, thickness_, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+    painter.setBrush(Qt::NoBrush);
+    painter.drawText(textCursor, text);
+    qDebug()<<"from painter " << text;
+}
+
+QGraphicsItem* TextTool::createItem() {
+    QGraphicsTextItem *item = new QGraphicsTextItem();
+    item->setPos(textCursor);
+    qDebug() << "From create item "<<text;
+    item->setPlainText(text);
+    item->setDefaultTextColor(color_);
+    item->setFont(QFont("Arial", thickness_));
+    return item;
+}
+
+
+
+
+
+
 
 
 

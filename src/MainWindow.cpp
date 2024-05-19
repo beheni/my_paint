@@ -147,7 +147,7 @@ void MainWindow::helpEvent() {
 
 void MainWindow::createUndoView()
 {
-    //треба додати в нормальну частину
+    //треба додати в нормальну частину або сказати шо так і задумували
     QDockWidget *undoDockWidget = new QDockWidget;
     undoDockWidget->setWindowTitle(tr("Command List"));
     undoDockWidget->setWidget(new QUndoView(undoStack));
@@ -159,16 +159,23 @@ void MainWindow::createUndoView()
 void MainWindow::onObjectAdded(QGraphicsItem *item) {
     qDebug() << "Object added";
     // undoStack->push(new QUndoCommand(QString("Object added on canvas"))); //basic vertion just with text
-    undoStack->push(new AddCommand(canvas, item));
+    auto addCommand = new AddCommand(canvas, item);
+    addCommand->setText("Object added on canvas");
+    undoStack->push(addCommand);
 }
 
-AddCommand::AddCommand(Canvas *canvas, QGraphicsItem *item, QUndoCommand *parent): QUndoCommand(parent), item(item), canvas(canvas) {}
+AddCommand::AddCommand(Canvas *canvas, QGraphicsItem *item, QUndoCommand *parent): QUndoCommand(parent), item(item), canvas(canvas) {
+}
 
 void AddCommand::undo() {
     canvas->scene()->removeItem(item);
+    canvas->scene()->update();
+    qDebug() << "undo";
 }
 
 void AddCommand::redo() {
     canvas->scene()->addItem(item);
+    canvas->scene()->update();
+    qDebug() << "redo";
 }
 

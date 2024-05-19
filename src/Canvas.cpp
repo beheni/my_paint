@@ -56,6 +56,10 @@ void Canvas::mouseReleaseEvent(QMouseEvent *event) {
     }
 }
 
+void Canvas::keyPressEvent(QKeyEvent *event) {
+    if (tool_) tool_->keyPressCallback(event);
+}
+
 void Canvas::onToolChange(Tool* tool) {
     tool_ = tool;
     tool_->setToolColor(lastSelectedColor);
