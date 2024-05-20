@@ -1,6 +1,7 @@
 #include "Tool.h"
 #include <QDebug>
 #include <QPainter>
+#include "Canvas.h"
 
 Tool::Tool(): QWidget() {
 }
@@ -9,19 +10,19 @@ QGraphicsItem* Tool::newItem() {
     return createItem();
 }
 
-void Tool::mousePressCallback(QMouseEvent *event, QGraphicsView* drawer) {
+void Tool::mousePressCallback(QMouseEvent *event, Canvas* drawer) {
     mousePress(event, drawer);
 }
 
-void Tool::mouseMoveCallback(QMouseEvent *event, QGraphicsView* drawer) {
+void Tool::mouseMoveCallback(QMouseEvent *event, Canvas* drawer) {
     mouseMove(event, drawer);
 }
 
-void Tool::mouseReleaseCallback(QMouseEvent *event, QGraphicsView* drawer) {
+void Tool::mouseReleaseCallback(QMouseEvent *event, Canvas* drawer) {
     mouseRelease(event, drawer);
 }
 
-void Tool::paint(QPaintEvent *event, QGraphicsView* drawer) {
+void Tool::paint(QPaintEvent *event, Canvas* drawer) {
     QWidget::paintEvent(event);
     painter(event, drawer);
 }
@@ -34,11 +35,15 @@ void Tool::setToolThickness(int thickness) {
     thickness_ = thickness;
 }
 
-void SelectionTool::mousePress(QMouseEvent *event, QGraphicsView* drawer) {
+void SelectionTool::mousePress(QMouseEvent *event, Canvas* drawer) {
     auto clickCoord = event->pos();
     if (lastSelectionBoundary && !lastSelectionBoundary->contains(clickCoord)) {
+        currentLayer->removeFromGroup(lastSelectionBoundary);
         drawer->scene()->removeItem(lastSelectionBoundary);
         lastSelectionBoundary = nullptr;
+        for (auto item: selectedItems) {
+            currentLayer->addToGroup(item);
+        }
         selectedItems.clear();
     }
     // drawer->scene()->removeItem(lastSelectionBoundary);
@@ -56,7 +61,7 @@ void SelectionTool::mousePress(QMouseEvent *event, QGraphicsView* drawer) {
 
 }
 
-void SelectionTool::mouseMove(QMouseEvent *event, QGraphicsView* drawer) {
+void SelectionTool::mouseMove(QMouseEvent *event, Canvas* drawer) {
     if (lastSelectionBoundary && lastSelectionBoundary->contains(event->pos())) {
         // lastSelectionBoundary->moveBy(event->pos().x()-moveStart.x(), event->pos().y()-moveStart.y());
         for (auto item: selectedItems) {
@@ -66,20 +71,25 @@ void SelectionTool::mouseMove(QMouseEvent *event, QGraphicsView* drawer) {
     }
     else {
         end = event->pos();
-        if (QGraphicsItem *item = drawer->itemAt(event->pos())) {
-            selectedItems.insert(item);
-            qDebug() << "You clicked on item" << item;
-        }
     }
 
 }
 
-void SelectionTool::mouseRelease(QMouseEvent *event, QGraphicsView* drawer) {
-    if (selectedItems.size() == 0) end = start;
-    else end = event->pos();
+void SelectionTool::mouseRelease(QMouseEvent *event, Canvas* drawer) {
+    end = event->pos();
+    lastSelectionBoundary = new QGraphicsRectItem(QRect(start.toPoint(), end.toPoint()));
+    auto itemsInArea = drawer->items(lastSelectionBoundary->boundingRect().toRect());
+    for (auto item: itemsInArea) {
+        if (drawer->layerItems()[drawer->currentLayer()].contains(item))
+            selectedItems.insert(item);
+    }
+    currentLayer = drawer->currentLayer();
+    for (auto item: selectedItems) {
+        currentLayer->removeFromGroup(item);
+    }
 }
 
-void SelectionTool::painter(QPaintEvent *event, QGraphicsView *drawer) {
+void SelectionTool::painter(QPaintEvent *event, Canvas *drawer) {
     QPainter painter(drawer->viewport());
 
     painter.setRenderHint(QPainter::Antialiasing);
@@ -112,19 +122,19 @@ QGraphicsItem* SelectionTool::createItem() {
 
 
 
-void DrawerTool::mousePress(QMouseEvent *event, QGraphicsView* drawer) {
+void DrawerTool::mousePress(QMouseEvent *event, Canvas* drawer) {
     path.moveTo(event->pos());
 }
 
-void DrawerTool::mouseMove(QMouseEvent *event, QGraphicsView* drawer) {
+void DrawerTool::mouseMove(QMouseEvent *event, Canvas* drawer) {
     path.lineTo(event->pos());
 }
 
-void DrawerTool::mouseRelease(QMouseEvent *event, QGraphicsView* drawer) {
+void DrawerTool::mouseRelease(QMouseEvent *event, Canvas* drawer) {
     path.lineTo(event->pos());
 }
 
-void DrawerTool::painter(QPaintEvent *event, QGraphicsView* drawer) {
+void DrawerTool::painter(QPaintEvent *event, Canvas* drawer) {
     QPainter painter(drawer->viewport());
     painter.setRenderHint(QPainter::Antialiasing);
     painter.setPen(QPen(color_, thickness_, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
@@ -139,20 +149,20 @@ QGraphicsItem* DrawerTool::createItem() {
     return item;
 }
 
-void RectTool::mousePress(QMouseEvent *event, QGraphicsView* drawer) {
+void RectTool::mousePress(QMouseEvent *event, Canvas* drawer) {
     rect.setTopLeft(event->pos());
     rect.setBottomRight(event->pos());
 }
 
-void RectTool::mouseMove(QMouseEvent *event, QGraphicsView* drawer) {
+void RectTool::mouseMove(QMouseEvent *event, Canvas* drawer) {
     rect.setBottomRight(event->pos());
 }
 
-void RectTool::mouseRelease(QMouseEvent *event, QGraphicsView* drawer) {
+void RectTool::mouseRelease(QMouseEvent *event, Canvas* drawer) {
     rect.setBottomRight(event->pos());
 }
 
-void RectTool::painter(QPaintEvent *event, QGraphicsView* drawer) {
+void RectTool::painter(QPaintEvent *event, Canvas* drawer) {
     QPainter painter(drawer->viewport());
     painter.setRenderHint(QPainter::Antialiasing);
     painter.setPen(QPen(color_, thickness_, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
@@ -166,20 +176,20 @@ QGraphicsItem* RectTool::createItem() {
     return item;
 }
 
-void EllipseTool::mousePress(QMouseEvent *event, QGraphicsView* drawer) {
+void EllipseTool::mousePress(QMouseEvent *event, Canvas* drawer) {
     rect.setTopLeft(event->pos());
     rect.setBottomRight(event->pos());
 }
 
-void EllipseTool::mouseMove(QMouseEvent *event, QGraphicsView* drawer) {
+void EllipseTool::mouseMove(QMouseEvent *event, Canvas* drawer) {
     rect.setBottomRight(event->pos());
 }
 
-void EllipseTool::mouseRelease(QMouseEvent *event, QGraphicsView* drawer) {
+void EllipseTool::mouseRelease(QMouseEvent *event, Canvas* drawer) {
     rect.setBottomRight(event->pos());
 }
 
-void EllipseTool::painter(QPaintEvent *event, QGraphicsView* drawer) {
+void EllipseTool::painter(QPaintEvent *event, Canvas* drawer) {
     QPainter painter(drawer->viewport());
     painter.setRenderHint(QPainter::Antialiasing);
     painter.setPen(QPen(color_, thickness_, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
@@ -195,20 +205,20 @@ QGraphicsItem* EllipseTool::createItem() {
 }
 
 
-void LineTool::mousePress(QMouseEvent *event, QGraphicsView* drawer) {
+void LineTool::mousePress(QMouseEvent *event, Canvas* drawer) {
     line.setP1(event->pos());
     line.setP2(event->pos());
 }
 
-void LineTool::mouseMove(QMouseEvent *event, QGraphicsView* drawer) {
+void LineTool::mouseMove(QMouseEvent *event, Canvas* drawer) {
     line.setP2(event->pos());
 }
 
-void LineTool::mouseRelease(QMouseEvent *event, QGraphicsView* drawer) {
+void LineTool::mouseRelease(QMouseEvent *event, Canvas* drawer) {
     line.setP2(event->pos());
 }
 
-void LineTool::painter(QPaintEvent *event, QGraphicsView* drawer) {
+void LineTool::painter(QPaintEvent *event, Canvas* drawer) {
     QPainter painter(drawer->viewport());
     painter.setRenderHint(QPainter::Antialiasing);
     painter.setPen(QPen(color_, thickness_, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
@@ -224,20 +234,20 @@ QGraphicsItem* LineTool::createItem() {
 
 
 
-// void RectTool::mousePress(QMouseEvent *event, QGraphicsView* drawer) {
+// void RectTool::mousePress(QMouseEvent *event, Canvas* drawer) {
 //     rect.setTopLeft(event->pos());
 //     rect.setBottomRight(event->pos());
 // }
 
-// void RectTool::mouseMove(QMouseEvent *event, QGraphicsView* drawer) {
+// void RectTool::mouseMove(QMouseEvent *event, Canvas* drawer) {
 //     rect.setBottomRight(event->pos());
 // }
 
-// void RectTool::mouseRelease(QMouseEvent *event, QGraphicsView* drawer) {
+// void RectTool::mouseRelease(QMouseEvent *event, Canvas* drawer) {
 //     rect.setBottomRight(event->pos());
 // }
 
-// void RectTool::painter(QPaintEvent *event, QGraphicsView* drawer) {
+// void RectTool::painter(QPaintEvent *event, Canvas* drawer) {
 //     QPainter painter(drawer->viewport());
 //     painter.setRenderHint(QPainter::Antialiasing);
 //     painter.setPen(QPen(color_, thickness_, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
@@ -249,20 +259,20 @@ QGraphicsItem* LineTool::createItem() {
 //     QGraphicsRectItem *item = new QGraphicsRectItem(rect);
 //     item->setPen(QPen(color_, thickness_, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
 //     return item;
-void TriangleTool::mousePress(QMouseEvent *event, QGraphicsView* drawer) {
+void TriangleTool::mousePress(QMouseEvent *event, Canvas* drawer) {
     boundingRect.setTopLeft(event->pos());
     boundingRect.setBottomRight(event->pos());
 }
 
-void TriangleTool::mouseMove(QMouseEvent *event, QGraphicsView* drawer) {
+void TriangleTool::mouseMove(QMouseEvent *event, Canvas* drawer) {
     boundingRect.setBottomRight(event->pos());
 }
 
-void TriangleTool::mouseRelease(QMouseEvent *event, QGraphicsView* drawer) {
+void TriangleTool::mouseRelease(QMouseEvent *event, Canvas* drawer) {
     boundingRect.setBottomRight(event->pos());
 }
 
-void TriangleTool::painter(QPaintEvent *event, QGraphicsView* drawer) {
+void TriangleTool::painter(QPaintEvent *event, Canvas* drawer) {
     QPainter painter(drawer->viewport());
     painter.setRenderHint(QPainter::Antialiasing);
     painter.setPen(QPen(color_, thickness_, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
@@ -276,22 +286,22 @@ QGraphicsItem* TriangleTool::createItem() {
     return item;
 }
 
-void PolyTool::mousePress(QMouseEvent *event, QGraphicsView* drawer) {
+void PolyTool::mousePress(QMouseEvent *event, Canvas* drawer) {
     if (event->button()==Qt::RightButton) {
         finished = true;
     }
     poly << event->pos();
 }
 
-void PolyTool::mouseMove(QMouseEvent *event, QGraphicsView* drawer) {
+void PolyTool::mouseMove(QMouseEvent *event, Canvas* drawer) {
     return;
 }
 
-void PolyTool::mouseRelease(QMouseEvent *event, QGraphicsView* drawer) {
+void PolyTool::mouseRelease(QMouseEvent *event, Canvas* drawer) {
     return;
 }
 
-void PolyTool::painter(QPaintEvent *event, QGraphicsView* drawer) {
+void PolyTool::painter(QPaintEvent *event, Canvas* drawer) {
     if (finished) {
         QPainter painter(drawer->viewport());
         painter.setRenderHint(QPainter::Antialiasing);

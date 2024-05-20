@@ -21,24 +21,6 @@ LayerWidget::LayerWidget(QWidget *parent): QListWidget(parent){
 
 }
 
-void LayerWidget::itemAdded(QGraphicsItem* item){
-    QPixmap pixmap(item->boundingRect().size().toSize());
-    pixmap.fill(Qt::transparent);
-
-    QPainter painter(&pixmap);
-
-    QStyleOptionGraphicsItem opt;
-    item->paint(&painter, &opt);
-    auto pix = pixmap.scaled(iconSize);
-    qDebug() << pix.size();
-
-    LayerWidgetItem* layerItem = new LayerWidgetItem(this);
-    QIcon icon(pixmap);
-    layerItem->setIcon(icon);
-    layerItem->setText(layerItem->getName());
-    addItem(layerItem);
-}
-
 void LayerWidgetItem::setItem(QGraphicsItem* item){
     item = item;
 }
@@ -66,7 +48,8 @@ LayerWidgetItem::LayerWidgetItem(QListWidget* parent): QListWidgetItem(parent){
 void LayerWidget::onLayerAdd(){
     LayerWidgetItem* layerItem = new LayerWidgetItem(this);
     layerItem->setText(layerItem->getName());
-    insertItem(0, layerItem);
+    addItem(layerItem);
+    setCurrentItem(layerItem);
 }
 
 void LayerWidget::onLayerRemove(){

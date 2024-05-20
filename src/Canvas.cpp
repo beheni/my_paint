@@ -74,11 +74,12 @@ void Canvas::onColorChange(const QColor& color) {
 void Canvas::onLayerAdd() {
     qDebug() << "Layer added " << layers_.size();
     Layer* newLayer = new Layer();
-    layers_.insert(0, newLayer);
+    layers_.push_back(newLayer);
     layerItems_[newLayer] = QList<QGraphicsItem*>();
     scene()->addItem(newLayer);
     setZValues();
-    scene()->update();
+    currentLayer_ = newLayer;
+
 }
 
 void Canvas::onLayerRemove(size_t index){
@@ -89,6 +90,8 @@ void Canvas::onLayerRemove(size_t index){
     qDebug() << "Layer removed " << index << " new size " << layers_.size();
     setZValues();
     delete layer;
+    size_t size = layers_.size();
+    currentLayer_ = layers_[std::min(index, size-1)];
 }
 
 void Canvas::onLayerSwap(size_t index1, size_t index2){
@@ -130,6 +133,7 @@ void Canvas::onThicknessChange(int thickness) {
 
 void Canvas::setZValues(){
     for(size_t i = 0; i<layers_.size(); ++i){
+        qDebug() << layers_[i]->parentWidget();
         layers_[i]->setZValue(i);
     }
     scene()->update();
