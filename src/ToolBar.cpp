@@ -40,10 +40,10 @@ void ToolBar::setup(){
     connect(poly, &Button::clicked, canvas,  [this, poly](){canvas->onToolChange(poly->tool());});
     poly->setIcon(QIcon(":/poly.png"));
 
-    Button *text = new Button(this);
-    text->setTool(new TextTool());
-    connect(text, &Button::clicked, canvas,  [this, text](){canvas->onToolChange(text->tool());});
-    text->setIcon(QIcon(":/text.png"));
+    // Button *text = new Button(this);
+    // text->setTool(new TextTool());
+    // connect(text, &Button::clicked, canvas,  [this, text](){canvas->onToolChange(text->tool());});
+    // text->setIcon(QIcon(":/text.png"));
 
     addWidget(selection);
     addSeparator();
@@ -59,8 +59,8 @@ void ToolBar::setup(){
     addSeparator();
     addWidget(poly);
     addSeparator();
-    addWidget(text);
-    addSeparator();
+    // addWidget(text);
+    // addSeparator();
 }
 
 ToolBar::ToolBar(QWidget *parent) : QToolBar(parent) {

@@ -27,10 +27,10 @@ void Canvas::paintEvent(QPaintEvent *event) {
 
 void Canvas::mousePressEvent(QMouseEvent *event) {
     path.moveTo(event->pos());
-    if (event->button() == Qt::LeftButton) {
-        drawing = true;
-        if (tool_) tool_->mousePressCallback(event, this);
-    }
+    // if (event->button() == Qt::LeftButton) {
+    drawing = true;
+    if (tool_) tool_->mousePressCallback(event, this);
+    // }
 }
 void Canvas::mouseMoveEvent(QMouseEvent *event) {
     if ((event->buttons() & Qt::LeftButton) && drawing) {

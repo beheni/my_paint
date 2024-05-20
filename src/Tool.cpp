@@ -301,9 +301,16 @@ QGraphicsItem* TriangleTool::createItem() {
 
 void PolyTool::mousePress(QMouseEvent *event, QGraphicsView* drawer) {
     if (event->button()==Qt::RightButton) {
+        qDebug()<<"Right button clicked";
         finished = true;
+        drawer->scene()->update();
+        return;
     }
-    poly << event->pos();
+    if (!finished) {
+        poly << event->pos();
+        qDebug() << event->pos();
+    }
+
 }
 
 void PolyTool::mouseMove(QMouseEvent *event, QGraphicsView* drawer) {
@@ -315,21 +322,27 @@ void PolyTool::mouseRelease(QMouseEvent *event, QGraphicsView* drawer) {
 }
 
 void PolyTool::painter(QPaintEvent *event, QGraphicsView* drawer) {
+    qDebug() <<"we are in painter";
     if (finished) {
+        qDebug() << "we finished in paint";
         QPainter painter(drawer->viewport());
         painter.setRenderHint(QPainter::Antialiasing);
         painter.setPen(QPen(color_, thickness_, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
         painter.setBrush(Qt::NoBrush);
         painter.drawPolygon(poly);
-        poly.clear();
+        // poly.clear();
     }
 
 }
 
 QGraphicsItem* PolyTool::createItem() {
+    qDebug() << "we are in create item";
     if (finished) {
+        qDebug() << "we finished in create";
         QGraphicsPolygonItem *item = new QGraphicsPolygonItem(poly);
         item->setPen(QPen(color_, thickness_, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+        poly.clear();
+        finished = false;
         return item;
     }
     return nullptr;
