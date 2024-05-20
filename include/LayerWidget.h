@@ -15,7 +15,6 @@ public:
     LayerWidget(QWidget *parent = nullptr);
     ~LayerWidget() override = default;
 public slots:
-    void itemAdded(QGraphicsItem* item);
     void onLayerAdd();
     void onLayerRemove();
     void onLayerUp();
