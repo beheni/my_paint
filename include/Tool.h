@@ -29,7 +29,7 @@ protected:
     virtual void mousePress(QMouseEvent *event, QGraphicsView* drawer) = 0;
     virtual void mouseMove(QMouseEvent *event, QGraphicsView* drawer) = 0;
     virtual void mouseRelease(QMouseEvent *event, QGraphicsView* drawer) = 0;
-    virtual void keyPressEvent(QKeyEvent *event);
+    virtual void keyPress(QKeyEvent *event) = 0;
     virtual void painter(QPaintEvent *event, QGraphicsView* drawer) = 0;
     virtual QGraphicsItem* createItem() = 0;
 };
@@ -46,7 +46,7 @@ protected:
     void mouseMove(QMouseEvent *event, QGraphicsView* drawer) override;
     void mouseRelease(QMouseEvent *event, QGraphicsView* drawer) override;
     void painter(QPaintEvent *event, QGraphicsView* drawer) override;
-    void keyPressEvent(QKeyEvent *event) override;
+    void keyPress(QKeyEvent *event) override;
     QGraphicsItem* createItem() override;
 };
 
@@ -58,7 +58,7 @@ protected:
     void mouseMove(QMouseEvent *event, QGraphicsView* drawer) override;
     void mouseRelease(QMouseEvent *event, QGraphicsView* drawer) override;
     void painter(QPaintEvent *event, QGraphicsView* drawer) override;
-    void keyPressEvent(QKeyEvent *event) override;
+    void keyPress(QKeyEvent *event) override;
     QGraphicsItem* createItem() override;
 };
 
@@ -70,7 +70,7 @@ protected:
     void mouseMove(QMouseEvent *event, QGraphicsView* drawer) override;
     void mouseRelease(QMouseEvent *event, QGraphicsView* drawer) override;
     void painter(QPaintEvent *event, QGraphicsView* drawer) override;
-    void keyPressEvent(QKeyEvent *event) override;
+    void keyPress(QKeyEvent *event) override;
     QGraphicsItem* createItem() override;
 };
 
@@ -82,7 +82,7 @@ protected:
     void mouseMove(QMouseEvent *event, QGraphicsView* drawer) override;
     void mouseRelease(QMouseEvent *event, QGraphicsView* drawer) override;
     void painter(QPaintEvent *event, QGraphicsView* drawer) override;
-    void keyPressEvent(QKeyEvent *event) override;
+    void keyPress(QKeyEvent *event) override;
     QGraphicsItem* createItem() override;
 };
 
@@ -94,7 +94,7 @@ protected:
     void mouseMove(QMouseEvent *event, QGraphicsView* drawer) override;
     void mouseRelease(QMouseEvent *event, QGraphicsView* drawer) override;
     void painter(QPaintEvent *event, QGraphicsView* drawer) override;
-    void keyPressEvent(QKeyEvent *event) override;
+    void keyPress(QKeyEvent *event) override;
     QGraphicsItem* createItem() override;
 };
 
@@ -106,7 +106,7 @@ protected:
     void mouseMove(QMouseEvent *event, QGraphicsView* drawer) override;
     void mouseRelease(QMouseEvent *event, QGraphicsView* drawer) override;
     void painter(QPaintEvent *event, QGraphicsView* drawer) override;
-    void keyPressEvent(QKeyEvent *event) override;
+    void keyPress(QKeyEvent *event) override;
     QGraphicsItem* createItem() override;
 };
 
@@ -121,7 +121,7 @@ protected:
     void mouseMove(QMouseEvent *event, QGraphicsView* drawer) override;
     void mouseRelease(QMouseEvent *event, QGraphicsView* drawer) override;
     void painter(QPaintEvent *event, QGraphicsView* drawer) override;
-    void keyPressEvent(QKeyEvent *event) override;
+    void keyPress(QKeyEvent *event) override;
     QGraphicsItem* createItem() override;
 };
 
@@ -134,7 +134,7 @@ protected:
     void mousePress(QMouseEvent *event, QGraphicsView* drawer) override;
     void mouseMove(QMouseEvent *event, QGraphicsView* drawer) override;
     void mouseRelease(QMouseEvent *event, QGraphicsView* drawer) override;
-    void keyPressEvent(QKeyEvent *event) override;
+    void keyPress(QKeyEvent *event) override;
     void painter(QPaintEvent *event, QGraphicsView* drawer) override;
     QGraphicsItem* createItem() override;
 };

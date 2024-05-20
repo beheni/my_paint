@@ -22,11 +22,7 @@ void Tool::mouseReleaseCallback(QMouseEvent *event, QGraphicsView* drawer) {
 }
 
 void Tool::keyPressCallback(QKeyEvent *event) {
-    keyPressEvent(event);
-}
-
-void Tool::keyPressEvent(QKeyEvent *event) {
-    return;
+    keyPress(event);
 }
 
 void Tool::paint(QPaintEvent *event, QGraphicsView* drawer) {
@@ -118,7 +114,7 @@ QGraphicsItem* SelectionTool::createItem() {
     // return item;
 }
 
-void SelectionTool::keyPressEvent(QKeyEvent *event) {
+void SelectionTool::keyPress(QKeyEvent *event) {
     // if (event->key() == Qt::Key_Delete) {
     //     for (auto item: selectedItems) {
     //         item->scene()->removeItem(item);
@@ -127,7 +123,7 @@ void SelectionTool::keyPressEvent(QKeyEvent *event) {
     // }
 }
 
-void DrawerTool::keyPressEvent(QKeyEvent *event) {
+void DrawerTool::keyPress(QKeyEvent *event) {
     /*qDebug() << "Key pressed";
     if (event->key() == Qt::Key_Backspace) {
         path = QPainterPath();
@@ -188,14 +184,14 @@ QGraphicsItem* RectTool::createItem() {
     return item;
 }
 
-void RectTool::keyPressEvent(QKeyEvent *event) {
+void RectTool::keyPress(QKeyEvent *event) {
     /*qDebug() << "Key pressed";
     if (event->key() == Qt::Key_Backspace) {
         rect = QRectF();
     }*/
 }
 
-void EllipseTool::keyPressEvent(QKeyEvent *event) {
+void EllipseTool::keyPress(QKeyEvent *event) {
     /*qDebug() << "Key pressed";
     if (event->key() == Qt::Key_Backspace) {
         rect = QRectF();
@@ -258,14 +254,14 @@ QGraphicsItem* LineTool::createItem() {
     return item;
 }
 
-void LineTool::keyPressEvent(QKeyEvent *event) {
+void LineTool::keyPress(QKeyEvent *event) {
     /*qDebug() << "Key pressed";
     if (event->key() == Qt::Key_Backspace) {
         rect = QRectF();
     }*/
 }
 
-void TriangleTool::keyPressEvent(QKeyEvent *event) {
+void TriangleTool::keyPress(QKeyEvent *event) {
     /*qDebug() << "Key pressed";
     if (event->key() == Qt::Key_Backspace) {
         rect = QRectF();
@@ -335,7 +331,7 @@ QGraphicsItem* PolyTool::createItem() {
     return nullptr;
 }
 
-void PolyTool::keyPressEvent(QKeyEvent *event) {
+void PolyTool::keyPress(QKeyEvent *event) {
     // if (event->key() == Qt::Key_Backspace) {
     //     poly.clear();
     //     finished = false;
@@ -347,7 +343,7 @@ void TextTool::mousePress(QMouseEvent *event, QGraphicsView* drawer) {
     textCursor = event->pos();
 }
 
-void TextTool::keyPressEvent(QKeyEvent *event) {
+void TextTool::keyPress(QKeyEvent *event) {
     qDebug() << "Key pressed";
     if (event->key() == Qt::Key_Backspace) {
         text = text.left(text.size()-1);
@@ -374,6 +370,7 @@ void TextTool::painter(QPaintEvent *event, QGraphicsView* drawer) {
     painter.setPen(QPen(color_, thickness_, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
     painter.setBrush(Qt::NoBrush);
     painter.drawText(textCursor, text);
+    painter.setFont(QFont("Arial", thickness_));
     qDebug()<<"from painter " << text;
 }
 
@@ -384,6 +381,8 @@ QGraphicsItem* TextTool::createItem() {
     item->setPlainText(text);
     item->setDefaultTextColor(color_);
     item->setFont(QFont("Arial", thickness_));
+    qDebug() << thickness_;
+    qDebug() << item->font().pointSize();
     return item;
 }
 
