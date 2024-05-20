@@ -80,9 +80,9 @@ MainWindow::MainWindow(){
     connect(layerBar->removeLayer(), &QPushButton::pressed, layerBar->layerWidget(), &LayerWidget::onLayerRemove);
     connect(layerBar->layerWidget(), &LayerWidget::layerRemove, canvas, &Canvas::onLayerRemove);
     connect(layerBar->layerWidget(), &QListWidget::currentRowChanged, canvas, &Canvas::onLayerChange);
-    connect(layerBar->layerWidget(), &LayerWidget::layerSwap, canvas, &Canvas::onLayerSwap);
-    connect(layerBar->upLayer(), &QPushButton::pressed, layerBar->layerWidget(), &LayerWidget::onLayerUp);
-    connect(layerBar->downLayer(), &QPushButton::pressed, layerBar->layerWidget(), &LayerWidget::onLayerDown);
+    // connect(layerBar->layerWidget(), &LayerWidget::layerSwap, canvas, &Canvas::onLayerSwap);
+    // connect(layerBar->upLayer(), &QPushButton::pressed, layerBar->layerWidget(), &LayerWidget::onLayerUp);
+    // connect(layerBar->downLayer(), &QPushButton::pressed, layerBar->layerWidget(), &LayerWidget::onLayerDown);
 
     connect(layerBar->thicknessSlider(), &QSlider::valueChanged, canvas, &Canvas::onThicknessChange);
     connect(canvas, &Canvas::objectAdded, this, &MainWindow::onObjectAdded);
@@ -169,12 +169,16 @@ AddCommand::AddCommand(Canvas *canvas, QGraphicsItem *item, QUndoCommand *parent
 
 void AddCommand::undo() {
     canvas->scene()->removeItem(item);
+    // canvas->currentLayer()->removeFromGroup(item);
+    // canvas->layerItems()[canvas->currentLayer()].removeOne(item);
     canvas->scene()->update();
     qDebug() << "undo";
 }
 
 void AddCommand::redo() {
     canvas->scene()->addItem(item);
+    // canvas->currentLayer()->addToGroup(item);
+    // canvas->layerItems()[canvas->currentLayer()].push_back(item);
     canvas->scene()->update();
     qDebug() << "redo";
 }

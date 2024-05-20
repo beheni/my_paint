@@ -35,13 +35,13 @@ LayerBar::LayerBar(QWidget *parent): QToolBar(parent){
 
     addLayer_ = new QPushButton("Add Layer", this);
     removeLayer_ = new QPushButton("Remove Layer", this);
-    upLayer_ = new QPushButton("Up Layer", this);
-    downLayer_ = new QPushButton("Down Layer", this);
+    // upLayer_ = new QPushButton("Up Layer", this);
+    // downLayer_ = new QPushButton("Down Layer", this);
 
     layout->addWidget(addLayer_);
     layout->addWidget(removeLayer_);
-    layout->addWidget(upLayer_);
-    layout->addWidget(downLayer_);
+    // layout->addWidget(upLayer_);
+    // layout->addWidget(downLayer_);
     layerGroup->setLayout(layout);
 
     layerWidget_ = new LayerWidget(this);
