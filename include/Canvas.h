@@ -32,6 +32,7 @@ public:
     void mousePressEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
     void mouseReleaseEvent(QMouseEvent *event) override;
+    void keyPressEvent(QKeyEvent *event) override;
     void paintEvent(QPaintEvent *event) override;
     Layer* currentLayer();
     QList<Layer*>& layers();
@@ -48,5 +49,11 @@ public slots:
     void onThicknessChange(int thickness);
 signals:
     void objectAdded(QGraphicsItem* item);
+    void objectMoved(QGraphicsItem* item);
+    void objectRemoved(QGraphicsItem* item);
+    void layerAdded(Layer* layer);
+    void layerRemoved(Layer* layer);
+    void layerSwapped(size_t index1, size_t index2);
+
 };
 #endif

@@ -4,6 +4,8 @@
 #include <QMenuBar>
 #include <QAction>
 
+class Menu;
+
 class MenuBar : public QMenuBar {
     Q_OBJECT
     QAction *openAction_;
@@ -15,10 +17,16 @@ class MenuBar : public QMenuBar {
     QAction *cutAction_;
     QAction *copyAction_;
     QAction *pasteAction_;
+    QAction *deleteAction_;
     QAction *zoomInAction_;
     QAction *zoomOutAction_;
     QAction *zoomResetAction_;
     QAction *helpAction_;
+
+    Menu* file;
+    Menu* edit;
+    Menu* view;
+    Menu* help;
 
 public:
     explicit MenuBar(QWidget *parent = nullptr);
@@ -27,6 +35,11 @@ public:
     QAction *newAction();
     QAction *exitAction();
     QAction *helpAction();
+
+    Menu* getFileMenu();
+    Menu* getEditMenu();
+    Menu* getViewMenu();
+    Menu* getHelpMenu();
 };
 
 class Menu : public QMenu{

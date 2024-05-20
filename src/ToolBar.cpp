@@ -41,7 +41,7 @@ void ToolBar::setup(){
     poly->setIcon(QIcon(":/poly.png"));
 
     Button *text = new Button(this);
-    text->setTool(new DrawerTool());
+    text->setTool(new TextTool());
     connect(text, &Button::clicked, canvas,  [this, text](){canvas->onToolChange(text->tool());});
     text->setIcon(QIcon(":/text.png"));
 

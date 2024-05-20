@@ -8,7 +8,7 @@
 #include <QGraphicsPixmapItem>
 
 MenuBar::MenuBar(QWidget *parent) : QMenuBar(parent) {
-    Menu *file = new Menu("&File");
+    file = new Menu("&File");
     newAction_ = file->addAction("New");
     newAction_->setShortcut(QKeySequence::New);
 
@@ -22,12 +22,12 @@ MenuBar::MenuBar(QWidget *parent) : QMenuBar(parent) {
     exitAction_ = file->addAction("Exit");
     exitAction_->setShortcut(QKeySequence::Quit);
 
-    Menu *edit = new Menu("&Edit");
-    undoAction_ = edit->addAction("Undo");
-    undoAction_->setShortcut(QKeySequence::Undo);
+    edit = new Menu("&Edit");
+    // undoAction_ = edit->addAction("Undo");
+    // undoAction_->setShortcut(QKeySequence::Undo);
 
-    redoAction_ = edit->addAction("Redo");
-    redoAction_->setShortcut(QKeySequence::Redo);
+    // redoAction_ = edit->addAction("Redo");
+    // redoAction_->setShortcut(QKeySequence::Redo);
     edit->addSeparator();
 
     cutAction_ = edit->addAction("Cut");
@@ -39,14 +39,17 @@ MenuBar::MenuBar(QWidget *parent) : QMenuBar(parent) {
     pasteAction_ = edit->addAction("Paste");
     pasteAction_->setShortcut(QKeySequence::Paste);
 
-    Menu *view = new Menu("&View");
+    deleteAction_ = edit->addAction("Delete");
+    deleteAction_->setShortcut(QKeySequence::Delete);
+
+    view = new Menu("&View");
     zoomInAction_ = view->addAction("Zoom In");
     zoomInAction_->setShortcut(QKeySequence::ZoomIn);
     zoomOutAction_ = view->addAction("Zoom Out");
     zoomOutAction_->setShortcut(QKeySequence::ZoomOut);
     zoomResetAction_ = view->addAction("Zoom Reset");
 
-    Menu *help = new Menu("&Help");
+    help = new Menu("&Help");
     helpAction_ = help->addAction("About");
 
     addMenu(file);
@@ -77,6 +80,24 @@ QAction *MenuBar::newAction() {
 QAction *MenuBar::helpAction() {
     return helpAction_;
 }
+
+Menu *MenuBar::getFileMenu() {
+    return file;
+}
+
+Menu *MenuBar::getEditMenu() {
+    return edit;
+}
+
+Menu *MenuBar::getViewMenu() {
+    return view;
+}
+
+Menu *MenuBar::getHelpMenu() {
+    return help;
+}
+
+
 
 
 

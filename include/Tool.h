@@ -23,6 +23,7 @@ public:
     void mousePressCallback(QMouseEvent *event, Canvas* drawer);
     void mouseMoveCallback(QMouseEvent *event,  Canvas* drawer);
     void mouseReleaseCallback(QMouseEvent *event, Canvas* drawer);
+    void keyPressCallback(QKeyEvent *event);
     void paint(QPaintEvent *event, Canvas* drawer);
     QGraphicsItem* newItem();
 protected:
@@ -30,6 +31,7 @@ protected:
     virtual void mouseMove(QMouseEvent *event, Canvas* drawer) = 0;
     virtual void mouseRelease(QMouseEvent *event, Canvas* drawer) = 0;
     virtual void painter(QPaintEvent *event, Canvas* drawer) = 0;
+    virtual void keyPress(QKeyEvent *event) = 0;
     virtual QGraphicsItem* createItem() = 0;
 };
 
@@ -46,6 +48,8 @@ protected:
     void mouseMove(QMouseEvent *event, Canvas* drawer) override;
     void mouseRelease(QMouseEvent *event, Canvas* drawer) override;
     void painter(QPaintEvent *event, Canvas* drawer) override;
+    void keyPress(QKeyEvent *event) override;
+
     QGraphicsItem* createItem() override;
 };
 
@@ -57,6 +61,8 @@ protected:
     void mouseMove(QMouseEvent *event, Canvas* drawer) override;
     void mouseRelease(QMouseEvent *event, Canvas* drawer) override;
     void painter(QPaintEvent *event, Canvas* drawer) override;
+    void keyPress(QKeyEvent *event) override;
+
     QGraphicsItem* createItem() override;
 };
 
@@ -68,6 +74,8 @@ protected:
     void mouseMove(QMouseEvent *event, Canvas* drawer) override;
     void mouseRelease(QMouseEvent *event, Canvas* drawer) override;
     void painter(QPaintEvent *event, Canvas* drawer) override;
+    void keyPress(QKeyEvent *event) override;
+
     QGraphicsItem* createItem() override;
 };
 
@@ -79,6 +87,7 @@ protected:
     void mouseMove(QMouseEvent *event, Canvas* drawer) override;
     void mouseRelease(QMouseEvent *event, Canvas* drawer) override;
     void painter(QPaintEvent *event, Canvas* drawer) override;
+    void keyPress(QKeyEvent *event) override;
     QGraphicsItem* createItem() override;
 };
 
@@ -90,6 +99,7 @@ protected:
     void mouseMove(QMouseEvent *event, Canvas* drawer) override;
     void mouseRelease(QMouseEvent *event, Canvas* drawer) override;
     void painter(QPaintEvent *event, Canvas* drawer) override;
+    void keyPress(QKeyEvent *event) override;
     QGraphicsItem* createItem() override;
 };
 
@@ -101,6 +111,7 @@ protected:
     void mouseMove(QMouseEvent *event, Canvas* drawer) override;
     void mouseRelease(QMouseEvent *event, Canvas* drawer) override;
     void painter(QPaintEvent *event, Canvas* drawer) override;
+    void keyPress(QKeyEvent *event) override;
     QGraphicsItem* createItem() override;
 };
 
@@ -115,12 +126,23 @@ protected:
     void mouseMove(QMouseEvent *event, Canvas* drawer) override;
     void mouseRelease(QMouseEvent *event, Canvas* drawer) override;
     void painter(QPaintEvent *event, Canvas* drawer) override;
+    void keyPress(QKeyEvent *event) override;
     QGraphicsItem* createItem() override;
 };
 
 
-//undo
-//redo
+class TextTool: public Tool{
+    Q_OBJECT
+    QString text;
+    QPointF textCursor;
+protected:
+    void mousePress(QMouseEvent *event, Canvas* drawer) override;
+    void mouseMove(QMouseEvent *event, Canvas* drawer) override;
+    void mouseRelease(QMouseEvent *event, Canvas* drawer) override;
+    void keyPress(QKeyEvent *event) override;
+    void painter(QPaintEvent *event, Canvas* drawer) override;
+    QGraphicsItem* createItem() override;
+};
 //fill
 
 #endif //MY_PAINT_TOOL_H

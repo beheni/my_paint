@@ -22,6 +22,10 @@ void Tool::mouseReleaseCallback(QMouseEvent *event, Canvas* drawer) {
     mouseRelease(event, drawer);
 }
 
+void Tool::keyPressCallback(QKeyEvent *event) {
+    keyPress(event);
+}
+
 void Tool::paint(QPaintEvent *event, Canvas* drawer) {
     QWidget::paintEvent(event);
     painter(event, drawer);
@@ -120,7 +124,21 @@ QGraphicsItem* SelectionTool::createItem() {
     // return item;
 }
 
+void SelectionTool::keyPress(QKeyEvent *event) {
+    // if (event->key() == Qt::Key_Delete) {
+    //     for (auto item: selectedItems) {
+    //         item->scene()->removeItem(item);
+    //     }
+    //     selectedItems.clear();
+    // }
+}
 
+void DrawerTool::keyPress(QKeyEvent *event) {
+    /*qDebug() << "Key pressed";
+    if (event->key() == Qt::Key_Backspace) {
+        path = QPainterPath();
+    }*/
+}
 
 void DrawerTool::mousePress(QMouseEvent *event, Canvas* drawer) {
     path.moveTo(event->pos());
@@ -173,10 +191,26 @@ void RectTool::painter(QPaintEvent *event, Canvas* drawer) {
 QGraphicsItem* RectTool::createItem() {
     QGraphicsRectItem *item = new QGraphicsRectItem(rect);
     item->setPen(QPen(color_, thickness_, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+    rect = QRectF();
     return item;
 }
 
+void RectTool::keyPress(QKeyEvent *event) {
+    /*qDebug() << "Key pressed";
+    if (event->key() == Qt::Key_Backspace) {
+        rect = QRectF();
+    }*/
+}
+
+void EllipseTool::keyPress(QKeyEvent *event) {
+    /*qDebug() << "Key pressed";
+    if (event->key() == Qt::Key_Backspace) {
+        rect = QRectF();
+    }*/
+}
+
 void EllipseTool::mousePress(QMouseEvent *event, Canvas* drawer) {
+
     rect.setTopLeft(event->pos());
     rect.setBottomRight(event->pos());
 }
@@ -201,6 +235,7 @@ void EllipseTool::painter(QPaintEvent *event, Canvas* drawer) {
 QGraphicsItem* EllipseTool::createItem() {
     QGraphicsEllipseItem *item = new QGraphicsEllipseItem(rect);
     item->setPen(QPen(color_, thickness_, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+    rect = QRectF();
     return item;
 }
 
@@ -229,10 +264,23 @@ void LineTool::painter(QPaintEvent *event, Canvas* drawer) {
 QGraphicsItem* LineTool::createItem() {
     QGraphicsLineItem *item = new QGraphicsLineItem(line);
     item->setPen(QPen(color_, thickness_, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+    line = QLineF();
     return item;
 }
 
+void LineTool::keyPress(QKeyEvent *event) {
+    /*qDebug() << "Key pressed";
+    if (event->key() == Qt::Key_Backspace) {
+        rect = QRectF();
+    }*/
+}
 
+void TriangleTool::keyPress(QKeyEvent *event) {
+    /*qDebug() << "Key pressed";
+    if (event->key() == Qt::Key_Backspace) {
+        rect = QRectF();
+    }*/
+}
 
 // void RectTool::mousePress(QMouseEvent *event, Canvas* drawer) {
 //     rect.setTopLeft(event->pos());
@@ -283,6 +331,7 @@ void TriangleTool::painter(QPaintEvent *event, Canvas* drawer) {
 QGraphicsItem* TriangleTool::createItem() {
     QGraphicsPolygonItem *item = new QGraphicsPolygonItem(QPolygonF() << (boundingRect.topLeft() + boundingRect.topRight())/2 <<boundingRect.bottomRight() << boundingRect.bottomLeft());
     item->setPen(QPen(color_, thickness_, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+    boundingRect = QRectF();
     return item;
 }
 
@@ -321,6 +370,63 @@ QGraphicsItem* PolyTool::createItem() {
     }
     return nullptr;
 }
+
+void PolyTool::keyPress(QKeyEvent *event) {
+    // if (event->key() == Qt::Key_Backspace) {
+    //     poly.clear();
+    //     finished = false;
+    // }
+}
+
+void TextTool::mousePress(QMouseEvent *event, Canvas* drawer) {
+    text = "";
+    textCursor = event->pos();
+}
+
+void TextTool::keyPress(QKeyEvent *event) {
+    qDebug() << "Key pressed";
+    text += event->text();
+    update();
+    qDebug() << text;
+    update();
+}
+
+void TextTool::mouseMove(QMouseEvent *event, Canvas* drawer) {
+    return;
+}
+
+void TextTool::mouseRelease(QMouseEvent *event, Canvas* drawer) {
+    return;
+}
+
+void TextTool::painter(QPaintEvent *event, Canvas* drawer) {
+    QPainter painter(drawer->viewport());
+    painter.setRenderHint(QPainter::Antialiasing);
+    painter.setPen(QPen(color_, thickness_, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+    painter.setBrush(Qt::NoBrush);
+    painter.drawText(textCursor, text);
+    painter.setFont(QFont("Arial", thickness_));
+    qDebug()<<"from painter " << text;
+}
+
+QGraphicsItem* TextTool::createItem() {
+    QGraphicsTextItem *item = new QGraphicsTextItem();
+    item->setPos(textCursor);
+    qDebug() << "From create item "<<text;
+    item->setPlainText(text);
+    item->setDefaultTextColor(color_);
+    item->setFont(QFont("Arial", thickness_));
+    qDebug() << thickness_;
+    qDebug() << item->font().pointSize();
+    text = "";
+    return item;
+}
+
+
+
+
+
+
 
 
 
