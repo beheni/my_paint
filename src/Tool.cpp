@@ -345,15 +345,10 @@ void TextTool::mousePress(QMouseEvent *event, QGraphicsView* drawer) {
 
 void TextTool::keyPress(QKeyEvent *event) {
     qDebug() << "Key pressed";
-    if (event->key() == Qt::Key_Backspace) {
-        text = text.left(text.size()-1);
-    }
-    else {
-        text += event->text();
-        repaint();
-    }
+    text += event->text();
+    update();
     qDebug() << text;
-    repaint();
+    update();
 }
 
 void TextTool::mouseMove(QMouseEvent *event, QGraphicsView* drawer) {
