@@ -181,6 +181,7 @@ void RectTool::painter(QPaintEvent *event, QGraphicsView* drawer) {
 QGraphicsItem* RectTool::createItem() {
     QGraphicsRectItem *item = new QGraphicsRectItem(rect);
     item->setPen(QPen(color_, thickness_, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+    rect = QRectF();
     return item;
 }
 
@@ -223,6 +224,7 @@ void EllipseTool::painter(QPaintEvent *event, QGraphicsView* drawer) {
 QGraphicsItem* EllipseTool::createItem() {
     QGraphicsEllipseItem *item = new QGraphicsEllipseItem(rect);
     item->setPen(QPen(color_, thickness_, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+    rect = QRectF();
     return item;
 }
 
@@ -251,6 +253,7 @@ void LineTool::painter(QPaintEvent *event, QGraphicsView* drawer) {
 QGraphicsItem* LineTool::createItem() {
     QGraphicsLineItem *item = new QGraphicsLineItem(line);
     item->setPen(QPen(color_, thickness_, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+    line = QLineF();
     return item;
 }
 
@@ -292,6 +295,7 @@ void TriangleTool::painter(QPaintEvent *event, QGraphicsView* drawer) {
 QGraphicsItem* TriangleTool::createItem() {
     QGraphicsPolygonItem *item = new QGraphicsPolygonItem(QPolygonF() << (boundingRect.topLeft() + boundingRect.topRight())/2 <<boundingRect.bottomRight() << boundingRect.bottomLeft());
     item->setPen(QPen(color_, thickness_, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+    boundingRect = QRectF();
     return item;
 }
 
@@ -378,6 +382,7 @@ QGraphicsItem* TextTool::createItem() {
     item->setFont(QFont("Arial", thickness_));
     qDebug() << thickness_;
     qDebug() << item->font().pointSize();
+    text = "";
     return item;
 }
 
